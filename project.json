@@ -1,0 +1,45 @@
+{
+  "name": "rlv-lol",
+  "title": "RL Ventures LLC",
+  "description": "Documentation and planning files for RL Ventures LLC.",
+  "version": "1.0",
+  "status": "active",
+  "category": "data",
+  "audience": "personal",
+  "tags": [
+    "business",
+    "documentation",
+    "planning"
+  ],
+  "created": "2025-01-01",
+  "updated": "2026-02-11",
+  "author": "Howell",
+  "language": "",
+  "architecture": "Documentation only — markdown files. No code, no app.",
+  "dependencies": [],
+  "run_command": "",
+  "health_check": "",
+  "ports": [],
+  "deployment": "none",
+  "vcs": "none",
+  "entry_points": {},
+  "key_files": [],
+  "data_files": [],
+  "generated_files": [],
+  "sensitive_files": [],
+  "env_vars": [],
+  "external_services": [],
+  "design_decisions": [
+    "Markdown-only — keep it simple, no fancy tooling"
+  ],
+  "gotchas": [
+    "May contain sensitive business information — do not publish"
+  ],
+  "known_issues": [],
+  "last_known_state": "unknown",
+  "history": [],
+  "related_projects": [],
+  "urls": [],
+  "shortcuts": [],
+  "notes": "Documentation-only project. Contains 2 markdown files."
+}
