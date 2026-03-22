@@ -1106,14 +1106,9 @@ footer {
       </div>
       <div class="contact-form">
         <h4>Request Information</h4>
-        <!-- FORMSPREE SETUP: 
-          1. Go to https://formspree.io/ and sign up with Katie's account
-          2. Create a new form for "tpp-services"
-          3. Copy the form ID (looks like: xxxxx)
-          4. Replace "YOUR_FORM_ID" below with that ID
-          https://formspree.io/f/YOUR_FORM_ID
-        -->
+        <!-- Formspree form ID: xlgpkwgj — submissions route to account email (set in Formspree dashboard → Notifications → jeff@ttpserv.com) -->
         <form id="contactForm" action="https://formspree.io/f/xlgpkwgj" method="POST">
+          <input type="hidden" name="_replyto" value="jeff@ttpserv.com">
           <div class="form-row">
             <div class="form-group">
               <label for="fname">First Name</label>
