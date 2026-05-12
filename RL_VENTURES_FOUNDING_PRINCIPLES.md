@@ -122,7 +122,7 @@ RL Ventures LLC (Michigan)
 
 **Phase 2: Build (Mar-Jun 2026)**
 - [ ] Convert provisional → full patent (deadline: Feb 3, 2027)
-- [ ] Deploy Ground= website
+- [x] Deploy Ground= website — UMF Calculator live at https://ground-equals-thermal.fly.dev (Apr 7, 2026)
 - [ ] First app: ConduitBridge visualizer
 - [ ] Establish dev workflow (local → Replit → deploy)
 - [ ] New laptop (RTX 5070) for portable compute

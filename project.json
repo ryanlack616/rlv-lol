@@ -12,10 +12,10 @@
     "planning"
   ],
   "created": "2025-01-01",
-  "updated": "2026-02-11",
+  "updated": "2026-04-04",
   "author": "Howell",
   "language": "",
-  "architecture": "Documentation only — markdown files. No code, no app.",
+  "architecture": "Static HTML — single-file landing page (index.html) + brain/ gated dashboard",
   "dependencies": [],
   "run_command": "",
   "health_check": "",
@@ -39,7 +39,7 @@
   "last_known_state": "unknown",
   "history": [],
   "related_projects": [],
-  "urls": [],
+  "urls": ["https://rlventures.com", "https://brain.rlv.lol"],
   "shortcuts": [],
   "notes": "Documentation-only project. Contains 2 markdown files."
 }

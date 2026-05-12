@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>brain · RL Ventures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --surface: #131316;
+    --surface-2: #18181c;
+    --border: #222228;
+    --text: #d0d0d8;
+    --text-mid: #888892;
+    --text-dim: #60606a;
+    --accent: #c4826e;
+    --accent-warm: #a3855a;
+    --green: #6e9e7a;
+    --amber: #c4a35a;
+    --red: #c46a5a;
+    --font: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 1.5rem;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .wordmark { font-size: 1.1rem; color: var(--accent); letter-spacing: 0.05em; }
+  .label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
+  .head-right { display: flex; gap: 1.25rem; align-items: baseline; }
+  a.logout {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+  }
+  a.logout:hover { color: var(--text); }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+    margin-top: 2.25rem;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  /* ── Clock hero ── */
+  .clock-hero {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+  .clock-big {
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .clock-body { color: var(--text-mid); font-size: 12px; line-height: 1.7; }
+  .clock-body strong { color: var(--text); font-weight: 500; }
+  .clock-meta { text-align: right; font-size: 10px; color: var(--text-dim); letter-spacing: 0.08em; }
+  .clock-meta .v { color: var(--text); font-size: 13px; letter-spacing: 0.02em; }
+
+  /* ── Status panel ── */
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .status-cell {
+    background: var(--surface);
+    padding: 1rem 1.25rem;
+  }
+  .status-k {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+  .status-v { font-size: 13px; color: var(--text); }
+  .status-sub { font-size: 10px; color: var(--text-mid); margin-top: 0.2rem; letter-spacing: 0.02em; }
+  .status-v.green  { color: var(--green); }
+  .status-v.amber  { color: var(--amber); }
+  .status-v.red    { color: var(--red); }
+  .status-v.pend   { color: var(--text-dim); }
+
+  /* ── Health probe row ── */
+  .health {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  .health-row {
+    display: grid;
+    grid-template-columns: 220px 1fr auto auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 12px;
+  }
+  .health-row:last-child { border-bottom: none; }
+  .health-name { color: var(--text); }
+  .health-name a { color: var(--text); }
+  .health-name a:hover { color: var(--accent); }
+  .health-url { font-size: 10px; color: var(--text-dim); }
+  .health-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    vertical-align: middle;
+  }
+  .health-dot.green { background: var(--green); }
+  .health-dot.red   { background: var(--red); }
+  .health-dot.amber { background: var(--amber); }
+  .health-state {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .health-state.green { color: var(--green); }
+  .health-state.red   { color: var(--red); }
+  .health-state.amber { color: var(--amber); }
+
+  /* ── Master plan ── */
+  .plan {
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .phase {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.25rem;
+  }
+  .phase:last-child { border-bottom: none; }
+  .phase-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
+    gap: 1rem;
+  }
+  .phase-name { font-size: 12px; color: var(--text); letter-spacing: 0.04em; }
+  .phase-state {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .phase-state.done    { color: var(--green); }
+  .phase-state.working { color: var(--amber); }
+  .phase-state.todo    { color: var(--text-dim); }
+  .phase-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 11.5px;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+  .phase-items .item { padding-left: 1.5rem; position: relative; }
+  .phase-items .item::before {
+    position: absolute;
+    left: 0;
+    color: var(--text-dim);
+  }
+  .phase-items .item.done::before    { content: '[✓]'; color: var(--green); }
+  .phase-items .item.working::before { content: '[~]'; color: var(--amber); }
+  .phase-items .item.todo::before    { content: '[ ]'; }
+
+  /* ── Next steps ── */
+  .next-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  .next-row {
+    display: grid;
+    grid-template-columns: 70px 1fr auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 12px;
+  }
+  .next-row:last-child { border-bottom: none; }
+  .next-pri {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .next-pri.p0 { color: var(--red); }
+  .next-pri.p1 { color: var(--amber); }
+  .next-pri.p2 { color: var(--text-dim); }
+  .next-body { color: var(--text); }
+  .next-sub { font-size: 10px; color: var(--text-dim); margin-top: 0.15rem; }
+  .next-due { font-size: 10px; color: var(--text-mid); letter-spacing: 0.05em; white-space: nowrap; }
+
+  /* ── Journal ── */
+  .journal {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  .j-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .j-row:last-child { border-bottom: none; }
+  .j-date { font-size: 10px; color: var(--text-dim); letter-spacing: 0.05em; padding-top: 0.1rem; }
+  .j-body { color: var(--text-mid); }
+  .j-body strong { color: var(--text); font-weight: 500; }
+  .j-tag {
+    display: inline-block;
+    font-size: 8.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 0.05rem 0.35rem;
+    margin-right: 0.4rem;
+    vertical-align: 1px;
+  }
+  .j-tag.filed  { color: var(--green); border-color: var(--green); }
+  .j-tag.deploy { color: var(--accent); border-color: var(--accent-warm); }
+  .j-tag.decide { color: var(--amber); border-color: var(--amber); }
+  .j-tag.event  { color: var(--text-mid); }
+
+  footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .clock-hero { grid-template-columns: 1fr; gap: 1rem; }
+    .clock-meta { text-align: left; }
+    .status-grid { grid-template-columns: 1fr; }
+    .health-row { grid-template-columns: 1fr auto; gap: 0.5rem; }
+    .health-url { grid-column: 1 / -1; }
+    .next-row { grid-template-columns: 1fr; }
+    .j-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<script>
+  if (sessionStorage.getItem('brain_auth') !== '1') location.replace('index.html');
+</script>
+
+<div class="wrap">
+
+<header>
+  <div>
+    <div class="label">RL Ventures LLC &nbsp;·&nbsp; Internal</div>
+    <div class="wordmark">brain</div>
+  </div>
+  <div class="head-right">
+    <span class="label" id="now">—</span>
+    <a class="logout" onclick="sessionStorage.removeItem('brain_auth'); location.replace('index.html');">exit</a>
+  </div>
+</header>
+
+<!-- ── Patent clock hero ── -->
+<div class="clock-hero">
+  <div>
+    <div class="clock-big" id="clockDays">—</div>
+    <div class="label" style="margin-top:0.5rem">Days to conversion</div>
+  </div>
+  <div class="clock-body">
+    Provisional patent <strong>#63/975,104</strong> — filed Feb 3, 2026, USPTO. Conversion to non-provisional must be filed by the deadline. Past that, priority date is lost.
+    <br><br>
+    Ground-truth verification methodology for computational glaze chemistry — linking predicted surface outcomes to measurable physical results.
+  </div>
+  <div class="clock-meta">
+    <div class="label">Deadline</div>
+    <div class="v">Feb 3, 2027</div>
+    <div class="label" style="margin-top:0.6rem">Filed</div>
+    <div class="v">Feb 3, 2026</div>
+  </div>
+</div>
+
+<!-- ── LLC / IP / brand status ── -->
+<div class="section-label">Status</div>
+<div class="status-grid">
+  <div class="status-cell">
+    <div class="status-k">RL Ventures LLC</div>
+    <div class="status-v amber">Filed</div>
+    <div class="status-sub">Submitted Feb 3, 2026 · Michigan LARA · awaiting approval</div>
+  </div>
+  <div class="status-cell">
+    <div class="status-k">EIN</div>
+    <div class="status-v pend">Pending</div>
+    <div class="status-sub">Blocked on LLC approval — free, after</div>
+  </div>
+  <div class="status-cell">
+    <div class="status-k">DBA · Ground=</div>
+    <div class="status-v pend">Pending</div>
+    <div class="status-sub">Livingston County Clerk · $10</div>
+  </div>
+  <div class="status-cell">
+    <div class="status-k">Provisional Patent</div>
+    <div class="status-v green">Filed</div>
+    <div class="status-sub">#63/975,104 · USPTO · $65 micro-entity</div>
+  </div>
+  <div class="status-cell">
+    <div class="status-k">groundequals.com</div>
+    <div class="status-v green">Registered</div>
+    <div class="status-sub">Porkbun · Feb 3, 2026</div>
+  </div>
+  <div class="status-cell">
+    <div class="status-k">rlventures.com</div>
+    <div class="status-v amber">DNS</div>
+    <div class="status-sub">CNAME present · A record not configured</div>
+  </div>
+</div>
+
+<!-- ── Live project health ── -->
+<div class="section-label">Project health</div>
+<div class="health" id="health">
+  <div class="health-row" data-url="https://stullatlas.app">
+    <div>
+      <div class="health-name"><a href="https://stullatlas.app" target="_blank" rel="noopener">Stull Atlas</a></div>
+      <div class="health-url">stullatlas.app</div>
+    </div>
+    <div></div>
+    <div><span class="health-dot"></span></div>
+    <div class="health-state" data-state>checking</div>
+  </div>
+  <div class="health-row" data-url="https://engine.stullatlas.app">
+    <div>
+      <div class="health-name"><a href="https://engine.stullatlas.app" target="_blank" rel="noopener">Ceramic Engine</a></div>
+      <div class="health-url">engine.stullatlas.app</div>
+    </div>
+    <div></div>
+    <div><span class="health-dot"></span></div>
+    <div class="health-state" data-state>checking</div>
+  </div>
+  <div class="health-row" data-url="https://ceramictransitions.com">
+    <div>
+      <div class="health-name"><a href="https://ceramictransitions.com" target="_blank" rel="noopener">Crystal VR</a></div>
+      <div class="health-url">ceramictransitions.com</div>
+    </div>
+    <div></div>
+    <div><span class="health-dot"></span></div>
+    <div class="health-state" data-state>checking</div>
+  </div>
+  <div class="health-row" data-url="https://groundequals.com">
+    <div>
+      <div class="health-name"><a href="https://groundequals.com" target="_blank" rel="noopener">groundequals.com</a></div>
+      <div class="health-url">groundequals.com</div>
+    </div>
+    <div></div>
+    <div><span class="health-dot"></span></div>
+    <div class="health-state" data-state>checking</div>
+  </div>
+  <div class="health-row" data-url="https://rlv.lol">
+    <div>
+      <div class="health-name"><a href="https://rlv.lol" target="_blank" rel="noopener">rlv.lol</a></div>
+      <div class="health-url">rlv.lol (this brand surface)</div>
+    </div>
+    <div></div>
+    <div><span class="health-dot"></span></div>
+    <div class="health-state" data-state>checking</div>
+  </div>
+  <div class="health-row" data-url="https://howell.help">
+    <div>
+      <div class="health-name"><a href="https://howell.help" target="_blank" rel="noopener">howell.help</a></div>
+      <div class="health-url">howell.help · gated chat</div>
+    </div>
+    <div></div>
+    <div><span class="health-dot"></span></div>
+    <div class="health-state" data-state>checking</div>
+  </div>
+</div>
+
+<!-- ── Master plan ── -->
+<div class="section-label">Master plan</div>
+<div class="plan">
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-name">Phase 1 — Foundation</div>
+      <div class="phase-state done">Done</div>
+    </div>
+    <div class="phase-items">
+      <div class="item done">Core principles defined</div>
+      <div class="item done">Provisional patent filed (USPTO #63/975,104)</div>
+      <div class="item done">groundequals.com registered (Porkbun)</div>
+      <div class="item done">RL Ventures LLC submitted (Michigan LARA)</div>
+      <div class="item working">EIN — waiting on LLC approval</div>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-name">Phase 2 — Build</div>
+      <div class="phase-state working">In progress</div>
+    </div>
+    <div class="phase-items">
+      <div class="item done">Stull Atlas deployed (stullatlas.app)</div>
+      <div class="item done">Ground= site deployed (groundequals.com — Fly)</div>
+      <div class="item done">Ceramic Engine deployed (engine.stullatlas.app)</div>
+      <div class="item done">Crystal VR deployed (ceramictransitions.com)</div>
+      <div class="item done">CMW corpus analysis → three empirical rules</div>
+      <div class="item working">Patent conversion → full non-provisional (deadline Feb 3, 2027)</div>
+      <div class="item working">Surface-chemistry probes (CT done; tenmoku/celadon/oil-spot next)</div>
+      <div class="item todo">ConduitBridge visualizer (first portable app)</div>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-name">Phase 3 — Scale</div>
+      <div class="phase-state todo">Queued</div>
+    </div>
+    <div class="phase-items">
+      <div class="item todo">License ConduitBridge IP</div>
+      <div class="item todo">Additional patents filed (heatwork model, surface probes)</div>
+      <div class="item todo">Mobile apps (App Store / Play Store)</div>
+      <div class="item todo">Defense / aerospace outreach</div>
+      <div class="item todo">Possible Form= rebrand for ceramics line</div>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="phase-head">
+      <div class="phase-name">Phase 4 — Expand</div>
+      <div class="phase-state todo">2027+</div>
+    </div>
+    <div class="phase-items">
+      <div class="item todo">Full patent portfolio</div>
+      <div class="item todo">Contract work or licensing deals</div>
+      <div class="item todo">Form= fine ceramics line</div>
+      <div class="item todo">Ground= as consulting brand</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Next steps ── -->
+<div class="section-label">Next steps</div>
+<div class="next-list">
+  <div class="next-row">
+    <div class="next-pri p0">P0</div>
+    <div>
+      <div class="next-body">Patent conversion — full non-provisional drafting</div>
+      <div class="next-sub">Includes claims, examples, drawings. Engage agent or self-prep. Cannot slip past Feb 3, 2027.</div>
+    </div>
+    <div class="next-due">by Feb 3, 2027</div>
+  </div>
+  <div class="next-row">
+    <div class="next-pri p1">P1</div>
+    <div>
+      <div class="next-body">Configure rlventures.com DNS</div>
+      <div class="next-sub">Add A records at Porkbun pointing to GitHub Pages or alias to rlv.lol. CNAME file already present.</div>
+    </div>
+    <div class="next-due">this week</div>
+  </div>
+  <div class="next-row">
+    <div class="next-pri p1">P1</div>
+    <div>
+      <div class="next-body">EIN from IRS</div>
+      <div class="next-sub">Trigger immediately on LLC approval notification.</div>
+    </div>
+    <div class="next-due">on approval</div>
+  </div>
+  <div class="next-row">
+    <div class="next-pri p1">P1</div>
+    <div>
+      <div class="next-body">DBA: Ground= at Livingston County Clerk</div>
+      <div class="next-sub">$10. Triggers branded contracts.</div>
+    </div>
+    <div class="next-due">on EIN</div>
+  </div>
+  <div class="next-row">
+    <div class="next-pri p2">P2</div>
+    <div>
+      <div class="next-body">Surface-probe extension — tenmoku, celadon, oil-spot</div>
+      <div class="next-sub">Reuse CT probe architecture. Augmented dataset already partially built.</div>
+    </div>
+    <div class="next-due">Q3 2026</div>
+  </div>
+  <div class="next-row">
+    <div class="next-pri p2">P2</div>
+    <div>
+      <div class="next-body">My Clay Corner — public gallery + commission link</div>
+      <div class="next-sub">Three pieces minimum, Stripe link or contact form. Currently asserted, not shown.</div>
+    </div>
+    <div class="next-due">when ready</div>
+  </div>
+</div>
+
+<!-- ── Journal ── -->
+<div class="section-label">Journal</div>
+<p class="label" style="margin-bottom:1rem; letter-spacing:0.05em; text-transform:none; font-size:11px; color:var(--text-dim)">
+  Append-only. Newest first. Truth over comfort — late filings are recorded, not hidden.
+</p>
+<div class="journal">
+
+  <div class="j-row">
+    <div class="j-date">2026-05-12</div>
+    <div class="j-body">
+      <span class="j-tag deploy">deploy</span>
+      <strong>rlv.lol rewrite.</strong> Landing page rewritten with operator strip, thesis, six openings, evidence section, patent countdown, contact lines. Brain dashboard replaced placeholder with patent clock, status panel, live health probes, master plan, next steps, journal. sha256 gate replaces clear-text.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-04-08</div>
+    <div class="j-body">
+      <span class="j-tag deploy">deploy</span>
+      <strong>groundequals.com live</strong> on Fly.io. Certs verified. UMF thermal calculator landing.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-04-07</div>
+    <div class="j-body">
+      <span class="j-tag deploy">deploy</span>
+      <strong>Ground= site deployed</strong> at ground-equals-thermal.fly.dev.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-03-04</div>
+    <div class="j-body">
+      <span class="j-tag event">milestone</span>
+      <strong>CMW Corpus → Three Rules.</strong> Months of analysis distilled into three empirical rules: feldspar choice determines Stull zone (5–40×); substitution deltas scale by base Si:Al (r=+0.98); colorants invisible to Stull except SiC (29×). Now the empirical foundation for Ceramic Engine.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-03-04</div>
+    <div class="j-body">
+      <span class="j-tag event">milestone</span>
+      <strong>Ground specification v0.1</strong> written — formal description of the workspace language co-evolved across 125 agent sessions.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-03-03</div>
+    <div class="j-body">
+      <span class="j-tag deploy">milestone</span>
+      <strong>Glazy ML pipeline complete.</strong> 9,815 recipes ingested. 5,273 CLIP embeddings. Carbon-trap probe F1=1.00 at threshold 0.7 on Shino. UMAP and gallery surfaces built.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-02-07</div>
+    <div class="j-body">
+      <span class="j-tag event">event</span>
+      <strong>Six Openings named.</strong> Strategic roadmap formed: molar weight problem, Stull-as-slice, firing curves invisible, data scattered, surface-chemistry gap, ground truth missing.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-02-03</div>
+    <div class="j-body">
+      <span class="j-tag filed">filed</span>
+      <strong>Provisional patent #63/975,104</strong> filed at USPTO, 6:05 PM ET. Micro-entity, $65. Ground-truth verification methodology for computational glaze chemistry. Conversion deadline: Feb 3, 2027.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-02-03</div>
+    <div class="j-body">
+      <span class="j-tag filed">filed</span>
+      <strong>RL Ventures LLC submitted</strong> to Michigan LARA. $50 fee. Awaiting approval.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-02-03</div>
+    <div class="j-body">
+      <span class="j-tag deploy">deploy</span>
+      <strong>groundequals.com registered</strong> at Porkbun. ~$11.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-02-02</div>
+    <div class="j-body">
+      <span class="j-tag decide">decide</span>
+      <strong>Five principles fixed:</strong> verify before you act · shape with intent · ground the abstract · truth over comfort · make what lasts. The operator <strong>=</strong> chosen as the brand signature.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div>RL Ventures LLC · Howell, Michigan · brain.rlv.lol</div>
+  <div>Append-only — edit history lives in git</div>
+</footer>
+
+</div>
+
+<script>
+  // ── Clock ──
+  (function() {
+    var deadline = new Date('2027-02-03T17:05:00-05:00');
+    var el = document.getElementById('clockDays');
+    function tick() {
+      var now = new Date();
+      var ms = deadline.getTime() - now.getTime();
+      var days = Math.ceil(ms / (1000 * 60 * 60 * 24));
+      el.textContent = days >= 0 ? String(days) : 'PAST';
+    }
+    tick();
+    setInterval(tick, 60 * 60 * 1000);
+  })();
+
+  // ── Now stamp ──
+  (function() {
+    var el = document.getElementById('now');
+    function tick() {
+      var d = new Date();
+      var pad = n => String(n).padStart(2, '0');
+      el.textContent = d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+    }
+    tick();
+    setInterval(tick, 30 * 1000);
+  })();
+
+  // ── Health probes ──
+  // CORS blocks reading status, so we use no-cors + fetch-timing. A successful response (even opaque)
+  // means the host resolved and answered. Failure or timeout = red. Heuristic, not authoritative.
+  (function() {
+    var rows = document.querySelectorAll('#health .health-row');
+    rows.forEach(async function(row) {
+      var url = row.getAttribute('data-url');
+      var dot = row.querySelector('.health-dot');
+      var state = row.querySelector('[data-state]');
+      var ctrl = new AbortController();
+      var to = setTimeout(() => ctrl.abort(), 6000);
+      try {
+        await fetch(url, { mode: 'no-cors', signal: ctrl.signal, cache: 'no-store' });
+        clearTimeout(to);
+        dot.classList.add('green');
+        state.classList.add('green');
+        state.textContent = 'live';
+      } catch (e) {
+        clearTimeout(to);
+        dot.classList.add('red');
+        state.classList.add('red');
+        state.textContent = 'unreachable';
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>

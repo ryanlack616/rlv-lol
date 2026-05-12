@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RL Ventures LLC</title>
+<meta name="description" content="Where proof meets practice. Computational ceramics, formal verification, and craft — built in Howell, Michigan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --surface: #101013;
+    --surface-2: #161619;
+    --border: #1e1e24;
+    --text: #d0d0d8;
+    --text-dim: #55555f;
+    --text-mid: #888892;
+    --accent: #c4826e;
+    --accent-warm: #a3855a;
+    --accent-dim: #6b4538;
+    --green: #6e9e7a;
+    --amber: #c4a35a;
+    --red: #c46a5a;
+    --font: 'IBM Plex Mono', 'Courier New', monospace;
+    --radius: 0px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 0;
+  }
+  header .container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .wordmark {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: var(--text-mid);
+  }
+  .wordmark span {
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .header-right {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .hero {
+    padding: 5rem 0 4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .equals-glyph {
+    font-size: clamp(4rem, 12vw, 9rem);
+    font-weight: 300;
+    color: var(--border);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 2rem;
+    user-select: none;
+    cursor: help;
+    transition: color 0.3s;
+  }
+  .equals-glyph:hover { color: var(--accent-dim); }
+  .hero-tagline {
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .hero-sub {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ── The operator strip ── */
+  .operator {
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 0;
+  }
+  .op-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .op-cell {
+    font-size: 11px;
+    color: var(--text-mid);
+    line-height: 1.6;
+  }
+  .op-cell .k {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+  .op-cell .v {
+    color: var(--accent);
+    font-family: var(--font);
+  }
+  .op-foot {
+    margin-top: 1.25rem;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    text-align: right;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1.75rem;
+    padding-top: 3rem;
+  }
+  .section-note {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    margin-top: -1rem;
+    line-height: 1.7;
+    max-width: 620px;
+  }
+
+  /* ── Thesis ── */
+  .thesis {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2.5rem;
+  }
+  .thesis-body {
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.85;
+    max-width: 680px;
+  }
+  .thesis-body em {
+    color: var(--accent);
+    font-style: normal;
+  }
+  .thesis-tag {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 1.5rem;
+  }
+
+  .divisions {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .div-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .div-card {
+    background: var(--surface);
+    padding: 2rem 1.75rem;
+  }
+  .div-name {
+    font-size: 1.05rem;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .div-sub {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 1.25rem;
+  }
+  .div-body {
+    font-size: 12.5px;
+    color: var(--text-mid);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+  .div-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .tag {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.45rem;
+  }
+
+  /* ── Openings (the unfinished) ── */
+  .openings {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2.5rem;
+  }
+  .opening-row {
+    display: grid;
+    grid-template-columns: 24px 1fr auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .opening-row:last-child { border-bottom: none; }
+  .op-num {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+  .op-title {
+    font-size: 13px;
+    color: var(--text);
+  }
+  .op-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 0.2rem;
+    line-height: 1.65;
+  }
+  .op-state {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid;
+  }
+  .op-state.open    { color: var(--red);   border-color: var(--red); }
+  .op-state.working { color: var(--amber); border-color: var(--amber); }
+  .op-state.done    { color: var(--green); border-color: var(--green); }
+
+  /* ── Projects ── */
+  .projects {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2.5rem;
+  }
+  .proj-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+  }
+  .proj-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .proj-row:last-child { border-bottom: none; }
+  .proj-name {
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  .proj-name a { color: var(--text); }
+  .proj-name a:hover { color: var(--accent); text-decoration: none; }
+  .proj-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.02em;
+  }
+  .proj-status {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .proj-status.live     { color: var(--green); border-color: var(--green); }
+  .proj-status.research { color: var(--amber); border-color: var(--amber); }
+  .proj-status.private  { color: var(--text-dim); border-color: var(--border); }
+  .proj-division {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .proj-division.ground { color: var(--accent); }
+  .proj-division.clay { color: var(--accent-warm); }
+
+  /* ── Evidence ── */
+  .evidence {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2.5rem;
+  }
+  .ev-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .ev-row {
+    display: grid;
+    grid-template-columns: 160px 1fr auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .ev-row:last-child { border-bottom: none; }
+  .ev-claim {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .ev-body {
+    color: var(--text-mid);
+    font-size: 12px;
+    line-height: 1.65;
+  }
+  .ev-link {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ── Patent / Clock ── */
+  .patent-block {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 1.75rem;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+  .patent-body {
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+  .patent-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+  .patent-num {
+    color: var(--text);
+    letter-spacing: 0.03em;
+  }
+  .clock {
+    text-align: right;
+    border-left: 1px solid var(--border);
+    padding-left: 2rem;
+    min-width: 160px;
+  }
+  .clock-days {
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .clock-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+  }
+  .clock-date {
+    font-size: 10px;
+    color: var(--text-mid);
+    margin-top: 0.25rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Principles inline ── */
+  .principle {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--accent-dim);
+    margin-top: 1rem;
+    font-style: italic;
+  }
+  .principle::before { content: "// "; color: var(--text-dim); }
+
+  /* ── Contact ── */
+  .contact {
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .contact-cell {
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    background: var(--surface);
+  }
+  .contact-k {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.6rem;
+  }
+  .contact-v {
+    font-size: 12px;
+    color: var(--text);
+  }
+  .contact-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+    letter-spacing: 0.02em;
+  }
+
+  footer {
+    padding: 2.5rem 0 3rem;
+  }
+  footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .footer-left {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+  .footer-right {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 720px) {
+    .op-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .div-grid { grid-template-columns: 1fr; }
+    .patent-block { grid-template-columns: 1fr; gap: 1.5rem; }
+    .clock { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 1.5rem; text-align: left; }
+    .ev-row { grid-template-columns: 1fr; gap: 0.3rem; }
+    .ev-link { text-align: left; }
+    .opening-row { grid-template-columns: 24px 1fr; }
+    .op-state { grid-column: 2; justify-self: start; margin-top: 0.4rem; }
+    .contact-grid { grid-template-columns: 1fr; }
+    header .container { flex-direction: column; gap: 0.3rem; }
+    footer .container { flex-direction: column; gap: 0.5rem; }
+    .hero { padding: 3.5rem 0 3rem; }
+    .proj-row { grid-template-columns: 1fr; }
+    .proj-status, .proj-division { justify-self: start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="wordmark"><span>RL Ventures</span> LLC</div>
+    <div class="header-right">Howell, Michigan &nbsp;·&nbsp; Est. 2026</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="equals-glyph" title="The operator. Assignment, equality, proof, identity.">=</div>
+    <div class="hero-tagline">Where proof meets practice.</div>
+    <div class="hero-sub">Computational ceramics · Formal verification · Craft</div>
+  </div>
+</section>
+
+<section class="operator">
+  <div class="container">
+    <div class="op-grid">
+      <div class="op-cell">
+        <span class="k">Code</span>
+        <span class="v">=</span> assignment, equality
+      </div>
+      <div class="op-cell">
+        <span class="k">Math</span>
+        <span class="v">=</span> proof, definition
+      </div>
+      <div class="op-cell">
+        <span class="k">Philosophy</span>
+        <span class="v">=</span> identity, this <em>is</em> that
+      </div>
+      <div class="op-cell">
+        <span class="k">The Operator</span>
+        <span class="v">=</span> verify everything
+      </div>
+    </div>
+    <div class="op-foot">Those who understand, understand.</div>
+  </div>
+</section>
+
+<section class="thesis">
+  <div class="container">
+    <div class="section-label">Why this exists</div>
+    <div class="thesis-body">
+      Ceramic chemistry is good 1920s science, decent 1990s software, and almost no 21st-century thinking. The Stull chart — the field's main visual tool — was published in <em>1922</em>. The largest open recipe database has roughly 12,000 usable rows. Nobody tracks firing curves rigorously. Nobody links predicted surface outcomes to measurable physical results.
+      <br><br>
+      RL Ventures is one person working at that intersection: a potter who writes verification software, a programmer who fires kilns. The patent is about the bridge between the two. The work is the proof that both sides exist in the same hands.
+      <span class="principle">Ground the abstract — ideas mean nothing until they touch reality.</span>
+    </div>
+  </div>
+</section>
+
+<section class="divisions">
+  <div class="container">
+    <div class="section-label">Divisions</div>
+    <div class="div-grid">
+      <div class="div-card">
+        <div class="div-name">Ground=</div>
+        <div class="div-sub">verify everything</div>
+        <div class="div-body">
+          Computational ceramics, formal verification, AI safety, and defense applications. Every claim is tested. Every output is grounded.
+        </div>
+        <div class="div-tags">
+          <span class="tag">Patents</span>
+          <span class="tag">AI · ML</span>
+          <span class="tag">Ceramics</span>
+          <span class="tag">Defense</span>
+          <span class="tag">Formal Proof</span>
+        </div>
+      </div>
+      <div class="div-card">
+        <div class="div-name">My Clay Corner</div>
+        <div class="div-sub">handmade with intention</div>
+        <div class="div-body">
+          Studio pottery, functional ceramics, commissions, and community. Every piece is made by hand in Michigan. No shortcuts. No spray coats.
+        </div>
+        <div class="div-tags">
+          <span class="tag">Pottery</span>
+          <span class="tag">Stoneware</span>
+          <span class="tag">Commissions</span>
+          <span class="tag">Local Markets</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="openings">
+  <div class="container">
+    <div class="section-label">Six Openings</div>
+    <p class="section-note">
+      Structural gaps in the field. We name them publicly because naming what's missing is the first step of verification. State is updated as work progresses.
+    </p>
+    <div>
+      <div class="opening-row">
+        <div class="op-num">01</div>
+        <div>
+          <div class="op-title">The Molar Weight Problem</div>
+          <div class="op-desc">Material chemistry shifts over decades. Nobody tracks era. A 1965 feldspar is not a 2025 feldspar. Working.</div>
+        </div>
+        <div class="op-state working">Working</div>
+      </div>
+      <div class="opening-row">
+        <div class="op-num">02</div>
+        <div>
+          <div class="op-title">The Stull Chart Is a Slice</div>
+          <div class="op-desc">A 2D projection through a high-dimensional space. The full space has never been mapped publicly. Working — Stull Atlas explorer extends it.</div>
+        </div>
+        <div class="op-state working">Working</div>
+      </div>
+      <div class="opening-row">
+        <div class="op-num">03</div>
+        <div>
+          <div class="op-title">Firing Curves Are Invisible</div>
+          <div class="op-desc">No widespread heatwork accounting. Cone numbers compress hours of thermal history into one integer. Working — Orton cone simulator.</div>
+        </div>
+        <div class="op-state working">Working</div>
+      </div>
+      <div class="opening-row">
+        <div class="op-num">04</div>
+        <div>
+          <div class="op-title">Data Is Scattered</div>
+          <div class="op-desc">~340K entries across community sites, ~12K usable. No central, versioned, license-clean corpus. ML pipeline live on 9,815 recipes with image embeddings.</div>
+        </div>
+        <div class="op-state working">Working</div>
+      </div>
+      <div class="opening-row">
+        <div class="op-num">05</div>
+        <div>
+          <div class="op-title">The Surface-Chemistry Gap</div>
+          <div class="op-desc">UMF (unity molecular formula) says nothing about surface quality. Carbon trap, crystal, oil spot — invisible to the chart. Open. First probes trained.</div>
+        </div>
+        <div class="op-state open">Open</div>
+      </div>
+      <div class="opening-row">
+        <div class="op-num">06</div>
+        <div>
+          <div class="op-title">Ground Truth Missing</div>
+          <div class="op-desc">Predictions go unverified. The patent thesis — link predicted outcomes to measured physical results — addresses this directly.</div>
+        </div>
+        <div class="op-state open">Open</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="projects">
+  <div class="container">
+    <div class="section-label">Projects</div>
+    <p class="section-note">
+      Each project is one corner of the same argument. Status reflects the public surface, not the internal state.
+    </p>
+    <div class="proj-list">
+
+      <div class="proj-row">
+        <div>
+          <div class="proj-name"><a href="https://stullatlas.app" target="_blank" rel="noopener">Stull Atlas</a></div>
+          <div class="proj-desc">Computational glaze chemistry — UMF analysis, 3D phase-space explorer, 9,815-recipe corpus with image embeddings. Patent pending.</div>
+        </div>
+        <div class="proj-status live">Live</div>
+        <div class="proj-division ground">Ground=</div>
+      </div>
+
+      <div class="proj-row">
+        <div>
+          <div class="proj-name"><a href="https://engine.stullatlas.app" target="_blank" rel="noopener">Ceramic Engine</a></div>
+          <div class="proj-desc">Substitution prediction engine. Three empirical rules from the CMW corpus drive recipe transformation under chemical constraints.</div>
+        </div>
+        <div class="proj-status live">Live</div>
+        <div class="proj-division ground">Ground=</div>
+      </div>
+
+      <div class="proj-row">
+        <div>
+          <div class="proj-name"><a href="https://ceramictransitions.com" target="_blank" rel="noopener">Crystal VR</a></div>
+          <div class="proj-desc">WebXR crystal-structure viewer — all 12 major ceramic structures with phase-transition simulation. Browser and headset.</div>
+        </div>
+        <div class="proj-status live">Live</div>
+        <div class="proj-division ground">Ground=</div>
+      </div>
+
+      <div class="proj-row">
+        <div>
+          <div class="proj-name"><a href="https://groundequals.com" target="_blank" rel="noopener">groundequals.com</a></div>
+          <div class="proj-desc">UMF thermal calculator and Ground= brand surface. Cold-email landing for industrial ceramics outreach.</div>
+        </div>
+        <div class="proj-status live">Live</div>
+        <div class="proj-division ground">Ground=</div>
+      </div>
+
+      <div class="proj-row">
+        <div>
+          <div class="proj-name">Orton Cone Simulator</div>
+          <div class="proj-desc">Deterministic heatwork model with residual-aware uncertainty calibration. Validated against official sample data (MAE 8.35 °C).</div>
+        </div>
+        <div class="proj-status research">Research</div>
+        <div class="proj-division ground">Ground=</div>
+      </div>
+
+      <div class="proj-row">
+        <div>
+          <div class="proj-name">ConduitBridge</div>
+          <div class="proj-desc">Protocol bridge for heterogeneous AV systems. 314 Lean files, formally verified correctness. Licensing-track.</div>
+        </div>
+        <div class="proj-status private">Private</div>
+        <div class="proj-division ground">Ground=</div>
+      </div>
+
+      <div class="proj-row">
+        <div>
+          <div class="proj-name">myclaystudio</div>
+          <div class="proj-desc">Studio management — bookings, clay days, community portfolio, integrated glaze calculator. Next.js + Drizzle.</div>
+        </div>
+        <div class="proj-status research">Beta</div>
+        <div class="proj-division clay">My Clay Corner</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="evidence">
+  <div class="container">
+    <div class="section-label">Evidence</div>
+    <p class="section-note">
+      Where to verify. Every load-bearing claim on this page has a receipt. If a link is missing, the claim is downgraded to a hypothesis.
+      <span class="principle">Verify before you act — confidence must be earned, not assumed.</span>
+    </p>
+    <div class="ev-grid">
+      <div class="ev-row">
+        <div class="ev-claim">Patent</div>
+        <div class="ev-body">Provisional application <span class="patent-num">#63/975,104</span> — filed Feb 3, 2026, USPTO. Ground-truth verification methodology for computational glaze chemistry.</div>
+        <div class="ev-link"><a href="https://www.uspto.gov" target="_blank" rel="noopener">USPTO →</a></div>
+      </div>
+      <div class="ev-row">
+        <div class="ev-claim">Three Rules</div>
+        <div class="ev-body">Feldspar choice determines Stull zone (Tier 1 glass-formers, 5–40× impact). Substitution deltas scale by base Si:Al (r = +0.98). Colorants are invisible to Stull except SiC (29×).</div>
+        <div class="ev-link"><a href="https://engine.stullatlas.app" target="_blank" rel="noopener">Engine →</a></div>
+      </div>
+      <div class="ev-row">
+        <div class="ev-claim">Corpus</div>
+        <div class="ev-body">9,815 recipes ingested from Glazy (CC BY-NC-SA 4.0). 9,578 Stull-plottable. 6,347 with chemistry + cone + surface metadata. 5,273 with CLIP image embeddings.</div>
+        <div class="ev-link"><a href="https://stullatlas.app" target="_blank" rel="noopener">Atlas →</a></div>
+      </div>
+      <div class="ev-row">
+        <div class="ev-claim">Surface Probe</div>
+        <div class="ev-body">Carbon-trap classifier trained on 79 labels with augmented data. F1 = 1.00 at threshold 0.7 on Shino-class recipes. Extending to Tenmoku, Celadon, Oil Spot.</div>
+        <div class="ev-link"><span style="color:var(--text-dim)">Internal</span></div>
+      </div>
+      <div class="ev-row">
+        <div class="ev-claim">Heatwork Model</div>
+        <div class="ev-body">Orton cone simulator validated against official sample data. MAE 8.35 °C, RMSE 9.64 °C, max abs delta 16.23 °C on non-lab pipeline.</div>
+        <div class="ev-link"><span style="color:var(--text-dim)">Internal</span></div>
+      </div>
+      <div class="ev-row">
+        <div class="ev-claim">Formal Proof</div>
+        <div class="ev-body">ConduitBridge: 314 Lean files. Verification target is protocol-bridge correctness under adversarial signal conditions.</div>
+        <div class="ev-link"><span style="color:var(--text-dim)">Licensing</span></div>
+      </div>
+    </div>
+
+    <div class="patent-block">
+      <div class="patent-body">
+        <div class="patent-label">Patent · Provisional</div>
+        <span class="patent-num">#63/975,104</span> — filed Feb 3, 2026 (USPTO). Conversion to non-provisional must be filed by the deadline. Status will be updated here when filed.
+        <span class="principle">Make what lasts — craft for permanence, not trends.</span>
+      </div>
+      <div class="clock">
+        <div class="clock-days" id="clockDays">—</div>
+        <div class="clock-label">Days to conversion</div>
+        <div class="clock-date">Feb 3, 2027</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <div class="contact-grid">
+      <div class="contact-cell">
+        <div class="contact-k">General</div>
+        <div class="contact-v"><a href="mailto:rlackpotter@gmail.com">rlackpotter@gmail.com</a></div>
+        <div class="contact-sub">Ryan Lack · Howell, MI</div>
+      </div>
+      <div class="contact-cell">
+        <div class="contact-k">Ground= · Licensing</div>
+        <div class="contact-v"><a href="mailto:rlackpotter@gmail.com?subject=Ground%3D%20licensing%20inquiry">rlackpotter@gmail.com</a></div>
+        <div class="contact-sub">Patent, IP, computational ceramics</div>
+      </div>
+      <div class="contact-cell">
+        <div class="contact-k">My Clay Corner · Commissions</div>
+        <div class="contact-v"><a href="mailto:rlackpotter@gmail.com?subject=Commission%20inquiry">rlackpotter@gmail.com</a></div>
+        <div class="contact-sub">Pottery, stoneware, local markets</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-left">RL Ventures LLC &nbsp;·&nbsp; Howell, Michigan &nbsp;·&nbsp; rlventures.com</div>
+    <div class="footer-right"><a href="https://groundequals.com">groundequals.com</a></div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    var deadline = new Date('2027-02-03T17:05:00-05:00');
+    var el = document.getElementById('clockDays');
+    if (!el) return;
+    function tick() {
+      var now = new Date();
+      var ms = deadline.getTime() - now.getTime();
+      var days = Math.ceil(ms / (1000 * 60 * 60 * 24));
+      el.textContent = days >= 0 ? String(days) : 'PAST';
+    }
+    tick();
+    setInterval(tick, 60 * 60 * 1000);
+  })();
+</script>
+
+</body>
+</html>
