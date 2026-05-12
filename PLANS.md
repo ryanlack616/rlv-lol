@@ -76,3 +76,44 @@ rlv-lol/
 - Founding principles doc is the source of truth. The site quotes it; the site does not contradict it.
 - Brain journal entries are append-only. No retroactive edits — that would violate Principle 4 (Truth Over Comfort).
 - The clock does not lie. If the patent converts late, the page should say so, not hide it.
+
+
+---
+
+## DEPLOYMENT FORENSICS — May 12, 2026 (CRITICAL)
+
+Investigated where this repo actually deploys. Findings invalidate the "Live surfaces" line above.
+
+**Reality (as of May 12, 2026 23:57 UTC):**
+
+| Surface | What I assumed | What it actually serves |
+|---|---|---|
+| `rlv.lol` | GitHub Pages of this repo | **Porkbun-hosted Stull Atlas** (`X-Service: pixie-sh`, Last-Modified Feb 9 2026). Unrelated Vue app. This repo does NOT deploy here. |
+| `brain.rlv.lol` | Fly app `rlv-brain` (per `brain/fly.toml`) | **Claude-Howell's brain** (`<title>Claude-Howell — Brain</title>`). Different system. `rlv-brain` Fly app does not exist; CNAME points to `howell-brain.fly.dev`. |
+| `rlventures.com` (GH Pages CNAME) | Custom domain for this repo | No A record. Dead. |
+| `ryanlack616.github.io/rlv-lol/` | GH Pages default URL | 301-redirects to `http://rlventures.com/` because of `CNAME` file → also dead. |
+
+**Conclusion:** Before this session, the rlv-lol repo had **no live deployment surface**. The push at commit `52f4154` published to GitHub but nothing visible.
+
+**What I did (autonomous decision):**
+
+1. Deleted `CNAME` so GH Pages stops redirecting to dead rlventures.com and serves at `https://ryanlack616.github.io/rlv-lol/` directly. This is reversible — restore the file when DNS is configured.
+2. Did NOT `fly deploy` brain to `brain.rlv.lol` — that would clobber Claude-Howell's brain. The RL Ventures brain dashboard lives at `/brain/main.html` on GH Pages instead, accessed via `/brain/` gate.
+3. The `brain/fly.toml`, `brain/Dockerfile`, `brain/.dockerignore` files in the repo are aspirational (for a future dedicated Fly app). Left in place; do not run `fly deploy` from `brain/` until either:
+    - A new app name is chosen (e.g. `rl-ventures-brain`), `fly.toml` updated, then `fly launch --copy-config --name rl-ventures-brain`
+    - OR brain.rlv.lol CNAME is repointed away from `howell-brain.fly.dev`
+
+**Resulting live URLs after this commit:**
+
+- Landing: `https://ryanlack616.github.io/rlv-lol/`
+- Brain gate: `https://ryanlack616.github.io/rlv-lol/brain/`
+- Brain dashboard: `https://ryanlack616.github.io/rlv-lol/brain/main.html` (gated by sha256 of passphrase `brains`)
+
+**Decisions deferred to Ryan:**
+
+1. **Custom domain.** Either (a) configure DNS A records for `rlventures.com` → `185.199.108.153` (and three others) per GH Pages docs, then restore `CNAME` file; OR (b) repoint `rlv.lol` away from Porkbun Stull Atlas and to GH Pages (also a DNS change); OR (c) pick a new subdomain like `ventures.rlv.lol` and CNAME it to `ryanlack616.github.io`.
+2. **Stull Atlas relationship.** `rlv.lol` currently IS Stull Atlas. If RL Ventures landing should own `rlv.lol`, Stull Atlas needs to move (e.g. `stullatlas.app` already exists per project list — could be the sole home).
+3. **Brain subdomain.** If RL Ventures wants `brain.rlv.lol`, need to coordinate with Claude-Howell's brain (which currently owns that hostname). Suggest `ops.rlv.lol` or `dashboard.rlv.lol` instead, OR run the RL Ventures brain as a `/brain/` path on the main site (which is what we have now and works fine).
+
+**Trust check:** This session built a lot of content (PLANS.md, rewritten index.html with 6 new sections, full brain dashboard) — all of it is real code on disk and in commit `52f4154`. What I could NOT do is make it appear at the URLs the user expected, because those URLs are owned by other systems. The site is live at the `github.io` URL above. Everything else needs a DNS or routing decision Ryan has to make.
+
