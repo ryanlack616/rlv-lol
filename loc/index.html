@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RL Ventures — Lines of Code</title>
+<meta name="description" content="Lines of code across the RL Ventures workspace. Where proof meets practice.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --surface: #101013;
+    --surface-2: #161619;
+    --border: #1e1e24;
+    --text: #d0d0d8;
+    --text-dim: #55555f;
+    --text-mid: #888892;
+    --accent: #c4826e;
+    --accent-warm: #a3855a;
+    --green: #6e9e7a;
+    --amber: #c4a35a;
+    --red: #c46a5a;
+    --blue: #6e88a3;
+    --font: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--font); font-size: 14px; line-height: 1.6;
+    min-height: 100vh;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .container { max-width: 880px; margin: 0 auto; padding: 0 1.5rem; }
+
+  header { border-bottom: 1px solid var(--border); padding: 1.25rem 0; }
+  header .container { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .wordmark { font-size: 0.85rem; letter-spacing: 0.08em; color: var(--text-mid); text-transform: uppercase; }
+  .wordmark b { color: var(--accent); font-weight: 500; }
+  .ts { font-size: 0.72rem; color: var(--text-dim); }
+
+  .hero { padding: 2.5rem 0 1.5rem; border-bottom: 1px solid var(--border); }
+  .hero h1 { font-size: 1.4rem; font-weight: 500; color: var(--text); letter-spacing: 0.02em; }
+  .hero p { color: var(--text-mid); font-size: 0.82rem; margin-top: 0.4rem; }
+
+  .totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin: 1.75rem 0; }
+  .stat { background: var(--surface); padding: 1.1rem 1.25rem; }
+  .stat .n { font-size: 1.55rem; font-weight: 400; color: var(--accent); letter-spacing: 0.01em; }
+  .stat .l { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.25rem; }
+
+  section { margin: 2.25rem 0; }
+  h2 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-mid); margin-bottom: 0.9rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+
+  .bar { display: flex; height: 26px; width: 100%; border: 1px solid var(--border); overflow: hidden; margin-bottom: 0.75rem; }
+  .bar span { display: block; height: 100%; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: 0.74rem; color: var(--text-mid); }
+  .legend i { display: inline-block; width: 9px; height: 9px; margin-right: 0.4rem; vertical-align: baseline; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+  th, td { text-align: left; padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--border); }
+  th { font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); font-weight: 400; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody tr:hover { background: var(--surface); }
+  .pname { color: var(--text); }
+  .minibar { position: relative; height: 4px; background: var(--surface-2); margin-top: 4px; }
+  .minibar > i { position: absolute; left: 0; top: 0; height: 100%; background: var(--accent-dim, #6b4538); }
+  .muted { color: var(--text-dim); }
+  .toggle { background: none; border: 1px solid var(--border); color: var(--text-mid); font-family: var(--font); font-size: 0.72rem; padding: 0.3rem 0.7rem; cursor: pointer; margin-top: 0.9rem; }
+  .toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  footer { border-top: 1px solid var(--border); padding: 1.5rem 0 2.5rem; margin-top: 2.5rem; font-size: 0.72rem; color: var(--text-dim); }
+  footer a { color: var(--text-mid); }
+  .note { font-size: 0.72rem; color: var(--text-dim); margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+<header><div class="container">
+  <div class="wordmark"><b>RL Ventures</b> · Lines of Code</div>
+  <div class="ts" id="ts">—</div>
+</div></header>
+
+<main class="container">
+  <div class="hero">
+    <h1>The workspace, counted.</h1>
+    <p>Every counted line across the active development tree. Vendored libraries, build artifacts, and generated bundles excluded.</p>
+  </div>
+
+  <div class="totals" id="totals"></div>
+
+  <section>
+    <h2>By category</h2>
+    <div class="bar" id="catbar"></div>
+    <div class="legend" id="catlegend"></div>
+    <p class="note">Code splits into <span id="cb"></span>.</p>
+  </section>
+
+  <section>
+    <h2>By language</h2>
+    <table><thead><tr><th>Extension</th><th class="num">Lines</th><th class="num">Share</th></tr></thead>
+    <tbody id="exttbody"></tbody></table>
+  </section>
+
+  <section>
+    <h2>Projects <span class="muted" id="projcount"></span></h2>
+    <table><thead><tr><th>Project</th><th class="num">Total</th><th class="num">Code</th></tr></thead>
+    <tbody id="projtbody"></tbody></table>
+    <button class="toggle" id="projtoggle">Show all</button>
+  </section>
+
+  <section>
+    <h2>Largest single files</h2>
+    <table><thead><tr><th>File</th><th class="num">Lines</th></tr></thead>
+    <tbody id="bigtbody"></tbody></table>
+  </section>
+</main>
+
+<footer><div class="container">
+  Generated from local LOC telemetry · static snapshot · <a href="../">RL Ventures</a>
+</div></footer>
+
+<script>
+const DATA = {"generated":"2026-05-30T16:53:13-04:00","source_ts":"2026-05-30T15:38:38-04:00","total_lines":2819826,"file_count":25829,"project_count":94,"by_category":{"code":717993,"markup":1085138,"data":792481,"docs":224214},"code_breakdown":{"code":577765,"comment":52152,"blank":88110},"by_ext":{".html":1039334,".json":766322,".py":338918,".md":164923,".js":151545,".ts":106021,".tsx":99373,".txt":59291,".svg":29222,".csv":21107,".css":16582,".h":10144,".sh":5769,".rs":4829,".yml":3213,".cpp":1394,".jsonl":981,".toml":858},"projects":[{"name":"stull-atlas","total":380251,"code":128901,"markup":91486,"data":125758,"docs":34106,"logic":103652,"comment_lines":11269,"blank_lines":13983},{"name":"ceramics-community","total":350352,"code":27623,"markup":297769,"data":8081,"docs":16879,"logic":21007,"comment_lines":2537,"blank_lines":4079},{"name":"glaze-chemist","total":285792,"code":42265,"markup":231911,"data":9793,"docs":1823,"logic":36422,"comment_lines":1152,"blank_lines":4691},{"name":"ceramic-history","total":215985,"code":10668,"markup":200455,"data":4854,"docs":8,"logic":9037,"comment_lines":341,"blank_lines":1290},{"name":"stullatlas.dev","total":201690,"code":94608,"markup":31851,"data":51945,"docs":23286,"logic":74690,"comment_lines":9511,"blank_lines":10409},{"name":"orton","total":165871,"code":15905,"markup":762,"data":146205,"docs":2999,"logic":12524,"comment_lines":995,"blank_lines":2388},{"name":"cmw","total":141463,"code":39473,"markup":14787,"data":59677,"docs":27526,"logic":31579,"comment_lines":2536,"blank_lines":5358},{"name":"glaze-db-sources","total":107939,"code":2871,"markup":0,"data":103508,"docs":1560,"logic":2192,"comment_lines":186,"blank_lines":493},{"name":"digicomp","total":61661,"code":9764,"markup":8971,"data":37125,"docs":5801,"logic":8369,"comment_lines":8,"blank_lines":1387},{"name":"glazy","total":58143,"code":25129,"markup":2622,"data":21413,"docs":8979,"logic":19944,"comment_lines":2529,"blank_lines":2656},{"name":"monospacepoetry","total":49427,"code":13192,"markup":23391,"data":2615,"docs":10229,"logic":10560,"comment_lines":795,"blank_lines":1837},{"name":"howell-brain-deploy","total":47150,"code":33269,"markup":7976,"data":1946,"docs":3959,"logic":27465,"comment_lines":1581,"blank_lines":4223},{"name":"howell-cortex","total":37018,"code":19809,"markup":0,"data":9241,"docs":7968,"logic":15913,"comment_lines":1076,"blank_lines":2820},{"name":"stull-visual-language","total":33356,"code":7388,"markup":14860,"data":9643,"docs":1465,"logic":5920,"comment_lines":567,"blank_lines":901},{"name":".","total":32175,"code":12077,"markup":8984,"data":5605,"docs":5509,"logic":10178,"comment_lines":472,"blank_lines":1427},{"name":"garbagepalkids","total":32128,"code":7363,"markup":5834,"data":18458,"docs":473,"logic":5865,"comment_lines":506,"blank_lines":992},{"name":"digitalfire","total":30915,"code":15181,"markup":10190,"data":4466,"docs":1078,"logic":11897,"comment_lines":1093,"blank_lines":2191},{"name":"high-temp-ceramics","total":29078,"code":9129,"markup":3108,"data":16245,"docs":596,"logic":7785,"comment_lines":430,"blank_lines":914},{"name":"ceramictransitions-taichi","total":29041,"code":15469,"markup":12896,"data":99,"docs":577,"logic":12607,"comment_lines":939,"blank_lines":1923},{"name":"minarealm","total":28546,"code":2611,"markup":20322,"data":2227,"docs":3386,"logic":2287,"comment_lines":107,"blank_lines":217},{"name":"howell","total":27779,"code":15590,"markup":856,"data":6192,"docs":5141,"logic":12143,"comment_lines":1716,"blank_lines":1732},{"name":"groundequals","total":26358,"code":11194,"markup":9786,"data":1324,"docs":4054,"logic":8959,"comment_lines":514,"blank_lines":1721},{"name":"overlapp-gallery","total":25459,"code":11404,"markup":303,"data":13042,"docs":710,"logic":9220,"comment_lines":1093,"blank_lines":1091},{"name":"ken-shenstone-legacy","total":24608,"code":3780,"markup":4531,"data":16279,"docs":18,"logic":2953,"comment_lines":243,"blank_lines":584},{"name":"ceramictransitions","total":23337,"code":3090,"markup":5406,"data":13870,"docs":971,"logic":2568,"comment_lines":195,"blank_lines":327},{"name":"howell-cluster","total":22041,"code":12095,"markup":0,"data":5760,"docs":4186,"logic":9234,"comment_lines":1433,"blank_lines":1430},{"name":"atlas-glazes","total":21459,"code":4170,"markup":2671,"data":7708,"docs":6910,"logic":3412,"comment_lines":223,"blank_lines":535},{"name":"reports","total":21031,"code":0,"markup":0,"data":20603,"docs":428,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"ceramic-engine","total":20378,"code":13154,"markup":0,"data":5729,"docs":1495,"logic":10474,"comment_lines":622,"blank_lines":2058},{"name":"howell-studio","total":18794,"code":6400,"markup":239,"data":7185,"docs":4970,"logic":4728,"comment_lines":967,"blank_lines":705},{"name":"howell-writeback","total":17096,"code":13600,"markup":0,"data":1329,"docs":2167,"logic":10466,"comment_lines":1624,"blank_lines":1512},{"name":"tarocchi","total":16917,"code":6000,"markup":3280,"data":7184,"docs":453,"logic":5389,"comment_lines":196,"blank_lines":415},{"name":"micro-bio","total":16732,"code":7002,"markup":1239,"data":7746,"docs":745,"logic":6179,"comment_lines":53,"blank_lines":781},{"name":"jan-sadowski","total":15017,"code":2192,"markup":9579,"data":70,"docs":3176,"logic":1708,"comment_lines":176,"blank_lines":308},{"name":"thinker-chat","total":14059,"code":954,"markup":2515,"data":5522,"docs":5068,"logic":776,"comment_lines":13,"blank_lines":165},{"name":"img-heightmap","total":13797,"code":11509,"markup":839,"data":0,"docs":1449,"logic":8575,"comment_lines":1615,"blank_lines":1319},{"name":"ledger-bridge","total":12434,"code":9476,"markup":183,"data":0,"docs":2775,"logic":7470,"comment_lines":296,"blank_lines":1710},{"name":"atomiclithosphere","total":10193,"code":2617,"markup":4853,"data":1473,"docs":1250,"logic":2190,"comment_lines":124,"blank_lines":303},{"name":"ceramic-micros","total":9120,"code":298,"markup":6064,"data":2394,"docs":364,"logic":247,"comment_lines":17,"blank_lines":34},{"name":"2minpapers","total":8384,"code":1690,"markup":2136,"data":4437,"docs":121,"logic":1516,"comment_lines":1,"blank_lines":173},{"name":"research","total":8217,"code":5213,"markup":2838,"data":12,"docs":154,"logic":4017,"comment_lines":313,"blank_lines":883},{"name":"hachure-tiles","total":8196,"code":236,"markup":402,"data":5912,"docs":1646,"logic":190,"comment_lines":22,"blank_lines":25},{"name":"comfyui-local","total":7071,"code":5361,"markup":1450,"data":68,"docs":192,"logic":4576,"comment_lines":297,"blank_lines":488},{"name":"twominpapers","total":6773,"code":1288,"markup":3249,"data":2236,"docs":0,"logic":1107,"comment_lines":44,"blank_lines":137},{"name":"glaze-engine","total":6621,"code":2761,"markup":0,"data":2822,"docs":1038,"logic":2140,"comment_lines":137,"blank_lines":484},{"name":"howell-voice","total":6456,"code":3493,"markup":0,"data":774,"docs":2189,"logic":2697,"comment_lines":151,"blank_lines":645},{"name":"io-connections","total":6153,"code":5441,"markup":0,"data":389,"docs":323,"logic":4278,"comment_lines":235,"blank_lines":928},{"name":"throwvr","total":6073,"code":2366,"markup":151,"data":2764,"docs":792,"logic":2025,"comment_lines":15,"blank_lines":328},{"name":"atomus-space","total":5776,"code":364,"markup":4724,"data":0,"docs":688,"logic":357,"comment_lines":0,"blank_lines":7},{"name":"ceramic-stability","total":5678,"code":101,"markup":4967,"data":270,"docs":340,"logic":84,"comment_lines":2,"blank_lines":15},{"name":"resources","total":5097,"code":0,"markup":2241,"data":0,"docs":2856,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"paperstack","total":5065,"code":5065,"markup":0,"data":0,"docs":0,"logic":4057,"comment_lines":251,"blank_lines":757},{"name":".playwright-mcp","total":4248,"code":0,"markup":1489,"data":2759,"docs":0,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"gmail-mcp","total":3897,"code":615,"markup":0,"data":2220,"docs":1062,"logic":529,"comment_lines":12,"blank_lines":79},{"name":"parcelspace","total":3668,"code":344,"markup":1804,"data":1461,"docs":59,"logic":296,"comment_lines":28,"blank_lines":20},{"name":"pipecamp","total":3396,"code":0,"markup":3396,"data":0,"docs":0,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"northbridgegroup","total":3140,"code":1209,"markup":1892,"data":28,"docs":11,"logic":1002,"comment_lines":51,"blank_lines":156},{"name":"ledger-bridge-site","total":2956,"code":1203,"markup":1634,"data":0,"docs":119,"logic":1007,"comment_lines":55,"blank_lines":141},{"name":"pogram-lint","total":2839,"code":142,"markup":1519,"data":443,"docs":735,"logic":112,"comment_lines":3,"blank_lines":27},{"name":"minarealm-shop","total":2799,"code":1057,"markup":945,"data":35,"docs":762,"logic":869,"comment_lines":51,"blank_lines":137},{"name":"throw","total":2569,"code":1048,"markup":0,"data":0,"docs":1521,"logic":799,"comment_lines":52,"blank_lines":198},{"name":"rootsatlas","total":2555,"code":341,"markup":1999,"data":24,"docs":191,"logic":259,"comment_lines":45,"blank_lines":37},{"name":"rlv-lol","total":2322,"code":158,"markup":1788,"data":60,"docs":316,"logic":137,"comment_lines":0,"blank_lines":21},{"name":"vision-api","total":2091,"code":1553,"markup":0,"data":79,"docs":459,"logic":1262,"comment_lines":74,"blank_lines":217},{"name":"ttp-services","total":1861,"code":0,"markup":1728,"data":0,"docs":133,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"ceramic-stability-engine","total":1770,"code":756,"markup":0,"data":885,"docs":129,"logic":558,"comment_lines":119,"blank_lines":79},{"name":"screen-snapper","total":1675,"code":331,"markup":1222,"data":56,"docs":66,"logic":273,"comment_lines":14,"blank_lines":44},{"name":"email-gate","total":1665,"code":1511,"markup":0,"data":77,"docs":77,"logic":1260,"comment_lines":31,"blank_lines":220},{"name":"pc-power","total":1618,"code":843,"markup":366,"data":63,"docs":346,"logic":652,"comment_lines":58,"blank_lines":133},{"name":"greenware","total":1390,"code":1254,"markup":0,"data":57,"docs":79,"logic":996,"comment_lines":96,"blank_lines":162},{"name":"forma","total":1385,"code":993,"markup":351,"data":38,"docs":3,"logic":798,"comment_lines":70,"blank_lines":125},{"name":"tests","total":1308,"code":1308,"markup":0,"data":0,"docs":0,"logic":1039,"comment_lines":49,"blank_lines":220},{"name":"howell-ryan-webxr","total":1223,"code":51,"markup":1042,"data":59,"docs":71,"logic":35,"comment_lines":0,"blank_lines":16},{"name":"tryit-photo-system","total":1121,"code":0,"markup":0,"data":795,"docs":326,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"howell-vscode-lm","total":1086,"code":814,"markup":0,"data":146,"docs":126,"logic":750,"comment_lines":34,"blank_lines":32},{"name":"bisque","total":919,"code":761,"markup":158,"data":0,"docs":0,"logic":626,"comment_lines":32,"blank_lines":103},{"name":"handoffs","total":892,"code":0,"markup":0,"data":0,"docs":892,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"vitreous","total":662,"code":0,"markup":0,"data":0,"docs":662,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"rlv-code","total":613,"code":0,"markup":531,"data":45,"docs":37,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"selfexecuting-v2","total":612,"code":0,"markup":391,"data":0,"docs":221,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"show-old-throw","total":605,"code":271,"markup":0,"data":334,"docs":0,"logic":218,"comment_lines":13,"blank_lines":40},{"name":"homepost-vigil","total":505,"code":0,"markup":0,"data":505,"docs":0,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"remote-access","total":476,"code":0,"markup":0,"data":0,"docs":476,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"deepdream-video-filter","total":443,"code":348,"markup":0,"data":0,"docs":95,"logic":256,"comment_lines":30,"blank_lines":62},{"name":"kaolin-research","total":335,"code":335,"markup":0,"data":0,"docs":0,"logic":288,"comment_lines":3,"blank_lines":44},{"name":"protomail-hardening","total":206,"code":0,"markup":206,"data":0,"docs":0,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"myclaystudio","total":156,"code":0,"markup":0,"data":115,"docs":41,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"scripts","total":148,"code":148,"markup":0,"data":0,"docs":0,"logic":116,"comment_lines":14,"blank_lines":18},{"name":".vscode","total":145,"code":0,"markup":0,"data":145,"docs":0,"logic":0,"comment_lines":0,"blank_lines":0},{"name":".github","total":143,"code":0,"markup":0,"data":0,"docs":143,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"howell-emacs","total":124,"code":0,"markup":0,"data":44,"docs":80,"logic":0,"comment_lines":0,"blank_lines":0},{"name":"_reports","total":95,"code":0,"markup":0,"data":0,"docs":95,"logic":0,"comment_lines":0,"blank_lines":0},{"name":".vite","total":10,"code":0,"markup":0,"data":10,"docs":0,"logic":0,"comment_lines":0,"blank_lines":0},{"name":".stfolder","total":5,"code":0,"markup":0,"data":0,"docs":5,"logic":0,"comment_lines":0,"blank_lines":0}],"largest_files":[{"lines":23044,"project":"digicomp","path":"digicomp/docs/x1a-sim-dual-phase-counter.json"},{"lines":19098,"project":"cmw","path":"cmw/cmw-glaze-corpus/data/_zone_crossings.json"},{"lines":16674,"project":"glaze-db-sources","path":"glaze-db-sources/data/currie-grid-umf.json"},{"lines":14298,"project":"cmw","path":"cmw/cmw-glaze-corpus/data/_rosetta.json"},{"lines":12273,"project":"cmw","path":"cmw/cmw-glaze-corpus/data/_zone_predictions.json"},{"lines":12161,"project":"garbagepalkids","path":"garbagepalkids/web/suggestions.json"},{"lines":12014,"project":"digicomp","path":"digicomp/docs/x1a-sim-counter.json"},{"lines":11907,"project":"overlapp-gallery","path":"overlapp-gallery/package-lock.json"},{"lines":11251,"project":"glazy","path":"glazy/glazy-remixed/data/recipe-relationships-export.json"},{"lines":10771,"project":"stullatlas.dev","path":"stullatlas.dev/public/data/digitalfire/digitalfire-processed.json"},{"lines":10771,"project":"glaze-db-sources","path":"glaze-db-sources/data/digitalfire-processed.json"},{"lines":10771,"project":"stull-atlas","path":"stull-atlas/.deploy/data/digitalfire/digitalfire-processed.json"},{"lines":10771,"project":"stull-atlas","path":"stull-atlas/public/data/digitalfire/digitalfire-processed.json"},{"lines":10771,"project":"stull-atlas","path":"stull-atlas/dist2/data/digitalfire/digitalfire-processed.json"},{"lines":10726,"project":"stullatlas.dev","path":"stullatlas.dev/public/data/currie-grid/currie-grid-processed.json"},{"lines":10726,"project":"glaze-db-sources","path":"glaze-db-sources/data/currie-grid-processed.json"},{"lines":10726,"project":"stull-atlas","path":"stull-atlas/.deploy/data/currie-grid/currie-grid-processed.json"},{"lines":10726,"project":"stull-atlas","path":"stull-atlas/public/data/currie-grid/currie-grid-processed.json"},{"lines":10726,"project":"stull-atlas","path":"stull-atlas/dist2/data/currie-grid/currie-grid-processed.json"},{"lines":9557,"project":"glaze-db-sources","path":"glaze-db-sources/data/digitalfire_umf.json"},{"lines":9482,"project":"orton","path":"orton/orton-cone-sim/artifacts/web_snapshots/snap3d_003.json"},{"lines":9482,"project":"orton","path":"orton/orton-cone-sim/artifacts/web_snapshots/snap3d_004.json"},{"lines":9482,"project":"orton","path":"orton/orton-cone-sim/artifacts/web_snapshots/snap3d_final.json"},{"lines":9482,"project":"orton","path":"orton/orton-cone-sim/artifacts/web_snapshots/snap3d_005.json"},{"lines":9482,"project":"orton","path":"orton/orton-cone-sim/artifacts/web_snapshots/snap3d_002.json"},{"lines":9482,"project":"orton","path":"orton/orton-cone-sim/artifacts/web_snapshots/snap3d_000.json"},{"lines":9482,"project":"orton","path":"orton/orton-cone-sim/artifacts/web_snapshots/snap3d_001.json"},{"lines":9216,"project":"stull-visual-language","path":"stull-visual-language/deploy-visual-language/_audit.json"},{"lines":9142,"project":"stullatlas.dev","path":"stullatlas.dev/package-lock.json"},{"lines":8905,"project":"glazy","path":"glazy/glazy-remixed/package-lock.json"}]};
+const fmt = n => (n || 0).toLocaleString('en-US');
+const CAT_COLORS = { code: 'var(--accent)', markup: 'var(--blue)', data: 'var(--amber)', docs: 'var(--green)' };
+
+document.getElementById('ts').textContent =
+  'snapshot ' + (DATA.source_ts || DATA.generated || '').replace('T', ' ').slice(0, 16);
+
+const totals = [
+  ['total_lines', 'Total lines'],
+  ['file_count', 'Files'],
+  ['project_count', 'Projects'],
+];
+document.getElementById('totals').innerHTML = totals.map(([k, l]) =>
+  `<div class="stat"><div class="n">${fmt(DATA[k])}</div><div class="l">${l}</div></div>`
+).join('') +
+  `<div class="stat"><div class="n">${fmt((DATA.code_breakdown||{}).code)}</div><div class="l">Source code</div></div>`;
+
+// Category bar
+const cats = DATA.by_category || {};
+const catTotal = Object.values(cats).reduce((a, b) => a + b, 0) || 1;
+document.getElementById('catbar').innerHTML = Object.entries(cats)
+  .sort((a, b) => b[1] - a[1])
+  .map(([k, v]) => `<span style="width:${(v / catTotal * 100).toFixed(2)}%;background:${CAT_COLORS[k] || 'var(--text-dim)'}"></span>`)
+  .join('');
+document.getElementById('catlegend').innerHTML = Object.entries(cats)
+  .sort((a, b) => b[1] - a[1])
+  .map(([k, v]) => `<span><i style="background:${CAT_COLORS[k] || 'var(--text-dim)'}"></i>${k} · ${fmt(v)} (${(v / catTotal * 100).toFixed(0)}%)</span>`)
+  .join('');
+const cb = DATA.code_breakdown || {};
+document.getElementById('cb').textContent =
+  `${fmt(cb.code)} code, ${fmt(cb.comment)} comment, ${fmt(cb.blank)} blank`;
+
+// Languages
+const exts = Object.entries(DATA.by_ext || {}).sort((a, b) => b[1] - a[1]);
+const extTotal = exts.reduce((a, b) => a + b[1], 0) || 1;
+document.getElementById('exttbody').innerHTML = exts.map(([e, n]) =>
+  `<tr><td>${e}</td><td class="num">${fmt(n)}</td><td class="num muted">${(n / extTotal * 100).toFixed(1)}%</td></tr>`
+).join('');
+
+// Projects
+const projs = DATA.projects || [];
+document.getElementById('projcount').textContent = `(${projs.length})`;
+const maxProj = projs.length ? projs[0].total : 1;
+function renderProjects(limit) {
+  document.getElementById('projtbody').innerHTML = projs.slice(0, limit).map(p =>
+    `<tr><td><span class="pname">${p.name}</span>
+       <div class="minibar"><i style="width:${(p.total / maxProj * 100).toFixed(1)}%"></i></div></td>
+     <td class="num">${fmt(p.total)}</td><td class="num muted">${fmt(p.code)}</td></tr>`
+  ).join('');
+}
+let projExpanded = false;
+renderProjects(15);
+const projToggle = document.getElementById('projtoggle');
+if (projs.length <= 15) { projToggle.style.display = 'none'; }
+projToggle.addEventListener('click', () => {
+  projExpanded = !projExpanded;
+  renderProjects(projExpanded ? projs.length : 15);
+  projToggle.textContent = projExpanded ? 'Show fewer' : 'Show all';
+});
+
+// Largest files
+document.getElementById('bigtbody').innerHTML = (DATA.largest_files || []).slice(0, 12).map(f =>
+  `<tr><td class="muted">${f.path}</td><td class="num">${fmt(f.lines)}</td></tr>`
+).join('');
+</script>
+</body>
+</html>
