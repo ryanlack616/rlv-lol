@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "generated_at": "2026-05-30T20:19:39.117091+00:00",
+  "source_timestamp": "2026-05-30T16:19:39.111515",
+  "daemon": {
+    "status": "ok",
+    "uptime": "31h 15m 57s",
+    "threads_healthy": true,
+    "threads_alive": 10,
+    "threads_total": 10
+  },
+  "cognition": {
+    "cortex_status": "ok",
+    "archivist": true,
+    "explorer": true,
+    "vision": true,
+    "cortex_requests": 101,
+    "hypotheses_verified": 75,
+    "dreams": 12,
+    "consolidations": 8
+  },
+  "knowledge_graph": {
+    "entities": 173,
+    "relations": 101,
+    "observations": 1247,
+    "structured_pct": 94.2,
+    "last_sync": "2026-05-29T01:02:07.464371"
+  },
+  "memory": {
+    "sessions": 801,
+    "notes": 857,
+    "note_coverage_pct": 99.8
+  },
+  "tasks": {
+    "pending": 4,
+    "completed": 90,
+    "failed": 0
+  },
+  "routing": {
+    "local_pct": 100.0,
+    "offline_ready": false
+  }
+}

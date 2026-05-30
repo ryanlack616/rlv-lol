@@ -1,7 +1,7 @@
 # RL Ventures — Site Plans
 
-**Status:** Active build. Howell session May 12, 2026.
-**Live surfaces:** rlv.lol (GitHub Pages, CNAME=rlventures.com — DNS not configured), brain.rlv.lol (Fly: rlv-brain).
+**Status:** Active build. Howell sessions May 12 & May 30, 2026.
+**Live surfaces:** `ryanlack616.github.io/rlv-lol/` (GitHub Pages — this repo). `rlv.lol` and `brain.rlv.lol` are owned by other systems — see DEPLOYMENT FORENSICS below.
 
 ---
 
@@ -117,3 +117,82 @@ Investigated where this repo actually deploys. Findings invalidate the "Live sur
 
 **Trust check:** This session built a lot of content (PLANS.md, rewritten index.html with 6 new sections, full brain dashboard) — all of it is real code on disk and in commit `52f4154`. What I could NOT do is make it appear at the URLs the user expected, because those URLs are owned by other systems. The site is live at the `github.io` URL above. Everything else needs a DNS or routing decision Ryan has to make.
 
+---
+
+## COGNITION INTEGRATION — May 30, 2026
+
+Surfaced the Howell daemon's live vitals in the brain dashboard. The goal: make the
+dashboard *meaningful* by showing the persistent partner actually running behind RL
+Ventures, as proof rather than assertion (the `Ground=` thesis applied to the brain
+itself).
+
+### The constraint
+
+The Howell daemon serves rich data at `http://127.0.0.1:7777/health/full` — but it is
+**local-only**. A public GitHub Pages page cannot fetch it, because:
+
+- `127.0.0.1` from a remote visitor's browser means *their* machine, not Ryan's.
+- An `https://` page is blocked from fetching `http://localhost` (mixed content).
+- The raw payload contains paths, an api-key descriptor, ports, and MCP server names —
+  none of which should ever reach a public surface.
+
+### The design — dual-mode + sanitized published snapshot
+
+```text
+daemon /health/full (local)
+   │  sanitize (aggregate only)
+   ▼
+_publish_snapshot.py  ──writes──►  brain/snapshot.json  ──git push──►  GitHub Pages
+   (opt-in, manual or timer)            (no paths/keys/IPs/names)
+
+brain/main.html cognition panel:
+   try live 127.0.0.1:7777 (1.5s timeout)  ──reachable?──► LIVE badge
+                    │ no
+                    ▼
+            fetch brain/snapshot.json  ──► SNAPSHOT · as-of badge
+                    │ no
+                    ▼
+                OFFLINE badge
+```
+
+So when Ryan views the dashboard **on his machine**, it reads the live daemon. For
+everyone else, it shows the last published snapshot with an "as-of" timestamp. Honest
+about which mode it's in.
+
+### Safety contract (do not break)
+
+`_publish_snapshot.py::build_snapshot()` emits **aggregate metrics only**: uptime,
+thread health, KG counts, memory/session counts, cortex request totals, hypotheses
+verified, dreams, task counts, local-routing %. It NEVER includes filesystem paths, the
+api-key, ports/endpoints, IP addresses, MCP server names, or per-project local paths.
+Any new daemon field added to the snapshot must pass the same bar.
+
+### Files
+
+```text
+brain/
+├── _publish_snapshot.py   ← NEW: reads daemon, sanitizes, writes snapshot.json
+├── snapshot.json          ← NEW: published aggregate vitals (committed, refreshed)
+└── main.html              ← +Cognition section (8-cell grid) + dual-mode JS
+```
+
+### Operating it
+
+- Manual refresh:  `cd brain && python3 _publish_snapshot.py`  (writes snapshot.json)
+- Refresh + ship:  `python3 _publish_snapshot.py --commit`     (git add+commit+push)
+- Dry run:         `python3 _publish_snapshot.py --print`
+- **To keep it fresh automatically:** add a user systemd timer (e.g.
+  `howell-brain-snapshot.timer`, hourly) that runs the `--commit` form. Opt-in — not
+  wired by default, consistent with the "no surprise auto-push" posture. A stale
+  snapshot is harmless (the badge shows its age); the live path is always tried first.
+
+### Status
+
+- [x] Sanitizing publisher built and validated (887-byte snapshot, no sensitive fields).
+- [x] Cognition panel added to brain (8 metrics, matches existing monospace aesthetic).
+- [x] Dual-mode verified: live fetch → snapshot fallback → offline, with correct badges.
+- [x] Journal updated (append-only) with the cognition deploy + persistence-hardening
+      milestone + Crystal VR Phase 3.3 ship.
+- [ ] **Deferred to Ryan:** enable the hourly snapshot timer if a continuously-fresh
+      public view is wanted. Decide whether any snapshot field is too revealing for a
+      public (sha256-gated) surface before relying on auto-push.

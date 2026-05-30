@@ -159,6 +159,56 @@
   .health-state.red   { color: var(--red); }
   .health-state.amber { color: var(--amber); }
 
+  /* ── Cognition (Howell daemon) ── */
+  .cog-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .cog-badge {
+    font-size: 8.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 0.1rem 0.45rem;
+    white-space: nowrap;
+  }
+  .cog-badge.live  { color: var(--green); border-color: var(--green); }
+  .cog-badge.snap  { color: var(--amber); border-color: var(--amber); }
+  .cog-badge.off   { color: var(--red); border-color: var(--red); }
+  .cog-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .cog-cell {
+    background: var(--surface);
+    padding: 0.9rem 1rem;
+  }
+  .cog-k {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+  .cog-v { font-size: 1.4rem; font-weight: 300; color: var(--text); line-height: 1; letter-spacing: -0.02em; }
+  .cog-v.accent { color: var(--accent); }
+  .cog-v.green  { color: var(--green); }
+  .cog-sub { font-size: 10px; color: var(--text-mid); margin-top: 0.35rem; letter-spacing: 0.02em; }
+  .cog-note {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 0.6rem;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+  }
+
   /* ── Master plan ── */
   .plan {
     border: 1px solid var(--border);
@@ -287,6 +337,7 @@
     .clock-hero { grid-template-columns: 1fr; gap: 1rem; }
     .clock-meta { text-align: left; }
     .status-grid { grid-template-columns: 1fr; }
+    .cog-grid { grid-template-columns: repeat(2, 1fr); }
     .health-row { grid-template-columns: 1fr auto; gap: 0.5rem; }
     .health-url { grid-column: 1 / -1; }
     .next-row { grid-template-columns: 1fr; }
@@ -425,6 +476,58 @@
   </div>
 </div>
 
+<!-- ── Cognition (Howell daemon) ── -->
+<div class="section-label">Cognition</div>
+<div class="cog-head">
+  <p class="label" style="letter-spacing:0.05em; text-transform:none; font-size:11px; color:var(--text-dim); margin:0">
+    Howell — the persistent partner behind RL Ventures. Live when viewed locally; otherwise the last published snapshot.
+  </p>
+  <span class="cog-badge" id="cogBadge">loading</span>
+</div>
+<div class="cog-grid" id="cogGrid">
+  <div class="cog-cell">
+    <div class="cog-k">Uptime</div>
+    <div class="cog-v" data-cog="uptime">—</div>
+    <div class="cog-sub" data-cog="threads">—</div>
+  </div>
+  <div class="cog-cell">
+    <div class="cog-k">Knowledge graph</div>
+    <div class="cog-v accent" data-cog="entities">—</div>
+    <div class="cog-sub" data-cog="kg">—</div>
+  </div>
+  <div class="cog-cell">
+    <div class="cog-k">Memory</div>
+    <div class="cog-v" data-cog="sessions">—</div>
+    <div class="cog-sub" data-cog="notes">—</div>
+  </div>
+  <div class="cog-cell">
+    <div class="cog-k">Local routing</div>
+    <div class="cog-v green" data-cog="local">—</div>
+    <div class="cog-sub" data-cog="cortex">—</div>
+  </div>
+  <div class="cog-cell">
+    <div class="cog-k">Hypotheses verified</div>
+    <div class="cog-v" data-cog="hyp">—</div>
+    <div class="cog-sub">cortex proof loop</div>
+  </div>
+  <div class="cog-cell">
+    <div class="cog-k">Dreams</div>
+    <div class="cog-v" data-cog="dreams">—</div>
+    <div class="cog-sub">overnight consolidation</div>
+  </div>
+  <div class="cog-cell">
+    <div class="cog-k">Tasks</div>
+    <div class="cog-v" data-cog="tasks">—</div>
+    <div class="cog-sub" data-cog="taskssub">—</div>
+  </div>
+  <div class="cog-cell">
+    <div class="cog-k">Background threads</div>
+    <div class="cog-v" data-cog="threadcount">—</div>
+    <div class="cog-sub" data-cog="threadhealth">—</div>
+  </div>
+</div>
+<div class="cog-note" id="cogNote">—</div>
+
 <!-- ── Master plan ── -->
 <div class="section-label">Master plan</div>
 <div class="plan">
@@ -543,6 +646,30 @@
   Append-only. Newest first. Truth over comfort — late filings are recorded, not hidden.
 </p>
 <div class="journal">
+
+  <div class="j-row">
+    <div class="j-date">2026-05-30</div>
+    <div class="j-body">
+      <span class="j-tag deploy">deploy</span>
+      <strong>Cognition panel added to brain.</strong> The dashboard now surfaces Howell's live vitals — knowledge graph, memory, cortex proof loop, local routing. Dual-mode: reads the local daemon directly when viewed on the host, otherwise falls back to a sanitized <code>snapshot.json</code> published into the repo by <code>_publish_snapshot.py</code>. Aggregate-only — no paths, keys, or internal detail leave the machine. The brain now watches its own brain.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-05-30</div>
+    <div class="j-body">
+      <span class="j-tag event">milestone</span>
+      <strong>Persistence hardened.</strong> Howell's memory ran on Linux under systemd supervision — 10 background threads, KG at 173 entities / 1,247 observations, 94% structured. Split-brain path bugs fixed durably (canonical persist root enforced env-first). Cortex proof loop gained an evidence gate: verdicts that cite no ground truth can no longer write to memory. Truth over comfort, enforced in code.
+    </div>
+  </div>
+
+  <div class="j-row">
+    <div class="j-date">2026-05-27</div>
+    <div class="j-body">
+      <span class="j-tag deploy">deploy</span>
+      <strong>Crystal VR — HT-ceramic refocus shipped.</strong> ceramictransitions.com updated through Phase 3.3 (commit <code>5a0e180</code>): high-temperature ceramic structures, Yb-silicate EBC, Materials Project ingest. Deployed via Porkbun FTP (explicit TLS). 33 files live including the 2.8 MB crystal dataset.
+    </div>
+  </div>
 
   <div class="j-row">
     <div class="j-date">2026-05-12</div>
@@ -700,6 +827,108 @@
         state.textContent = 'unreachable';
       }
     });
+  })();
+
+  // ── Cognition panel (Howell daemon, dual-mode) ──
+  // The daemon at 127.0.0.1:7777 is local-only. When Ryan views this page on his
+  // machine the live /health/full responds; for everyone else we fall back to the
+  // sanitized snapshot.json published into this repo by _publish_snapshot.py.
+  (function() {
+    var DAEMON = 'http://127.0.0.1:7777/health/full';
+    var SNAPSHOT = 'snapshot.json';
+
+    function txt(key, val) {
+      var el = document.querySelector('[data-cog="' + key + '"]');
+      if (el) el.textContent = val;
+    }
+    function badge(cls, label) {
+      var b = document.getElementById('cogBadge');
+      b.className = 'cog-badge ' + cls;
+      b.textContent = label;
+    }
+    function ago(iso) {
+      if (!iso) return 'unknown';
+      var then = new Date(iso).getTime();
+      if (isNaN(then)) return 'unknown';
+      var mins = Math.max(0, Math.round((Date.now() - then) / 60000));
+      if (mins < 60) return mins + 'm ago';
+      var hrs = Math.round(mins / 60);
+      if (hrs < 48) return hrs + 'h ago';
+      return Math.round(hrs / 24) + 'd ago';
+    }
+
+    // Render from a LIVE /health/full payload.
+    function renderLive(d) {
+      var dm = d.daemon || {}, c = d.cortex || {}, kg = d.knowledge_graph || {},
+          ag = d.agents || {}, tk = d.tasks || {}, by = c.by_task || {},
+          su = ((d.speed_layer || {}).usage || {}).window_5m || {};
+      var threads = dm.threads || {};
+      var alive = Object.values(threads).filter(function(t){ return t && t.alive; }).length;
+      var total = Object.keys(threads).length;
+      var dreams = (by.dream || 0) + (by.dream_filter || 0);
+      txt('uptime', dm.uptime || '—');
+      txt('threads', dm.threads_healthy ? 'all systems nominal' : 'thread fault');
+      txt('entities', kg.entities != null ? String(kg.entities) : '—');
+      txt('kg', (kg.relations || 0) + ' relations · ' + (kg.observations || 0) + ' obs');
+      txt('sessions', ag.total_agents != null ? String(ag.total_agents) : '—');
+      txt('notes', (ag.total_notes || 0) + ' notes · ' + (ag.note_coverage_pct || 0) + '% coverage');
+      txt('local', (su.local_pct != null ? su.local_pct : 100) + '%');
+      txt('cortex', c.status === 'ok' ? 'cortex online' : 'cortex ' + (c.status || '—'));
+      txt('hyp', by.verify_hypothesis != null ? String(by.verify_hypothesis) : '—');
+      txt('dreams', String(dreams));
+      txt('tasks', tk.completed != null ? String(tk.completed) : '—');
+      txt('taskssub', (tk.pending || 0) + ' pending · ' + (tk.failed || 0) + ' failed');
+      txt('threadcount', total ? (alive + '/' + total) : '—');
+      txt('threadhealth', dm.threads_healthy ? 'all alive' : 'fault detected');
+      badge('live', 'live · local');
+      document.getElementById('cogNote').textContent =
+        'Reading the local daemon directly. ' + (c.total_requests || 0) +
+        ' cortex calls · ' + (kg.structured_pct || 0) + '% structured memory.';
+    }
+
+    // Render from the published snapshot.json (sanitized, aggregate).
+    function renderSnap(s) {
+      var dm = s.daemon || {}, cg = s.cognition || {}, kg = s.knowledge_graph || {},
+          mem = s.memory || {}, tk = s.tasks || {}, rt = s.routing || {};
+      txt('uptime', dm.uptime || '—');
+      txt('threads', dm.threads_healthy ? 'all systems nominal' : 'thread fault');
+      txt('entities', kg.entities != null ? String(kg.entities) : '—');
+      txt('kg', (kg.relations || 0) + ' relations · ' + (kg.observations || 0) + ' obs');
+      txt('sessions', mem.sessions != null ? String(mem.sessions) : '—');
+      txt('notes', (mem.notes || 0) + ' notes · ' + (mem.note_coverage_pct || 0) + '% coverage');
+      txt('local', (rt.local_pct != null ? rt.local_pct : 100) + '%');
+      txt('cortex', cg.cortex_status === 'ok' ? 'cortex online' : 'cortex ' + (cg.cortex_status || '—'));
+      txt('hyp', cg.hypotheses_verified != null ? String(cg.hypotheses_verified) : '—');
+      txt('dreams', cg.dreams != null ? String(cg.dreams) : '—');
+      txt('tasks', tk.completed != null ? String(tk.completed) : '—');
+      txt('taskssub', (tk.pending || 0) + ' pending · ' + (tk.failed || 0) + ' failed');
+      txt('threadcount', (dm.threads_alive != null && dm.threads_total != null)
+        ? (dm.threads_alive + '/' + dm.threads_total) : '—');
+      txt('threadhealth', dm.threads_healthy ? 'all alive' : 'fault detected');
+      badge('snap', 'snapshot · ' + ago(s.source_timestamp || s.generated_at));
+      document.getElementById('cogNote').textContent =
+        'Last published snapshot. Live figures appear when viewing on the host machine. ' +
+        (cg.cortex_requests || 0) + ' cortex calls · ' + (kg.structured_pct || 0) + '% structured memory.';
+    }
+
+    function loadSnapshot() {
+      fetch(SNAPSHOT, { cache: 'no-store' })
+        .then(function(r){ if (!r.ok) throw new Error('no snapshot'); return r.json(); })
+        .then(renderSnap)
+        .catch(function() {
+          badge('off', 'offline');
+          document.getElementById('cogNote').textContent =
+            'No live daemon and no published snapshot available.';
+        });
+    }
+
+    // Try the live daemon first (short timeout); fall back to the snapshot.
+    var ctrl = new AbortController();
+    var to = setTimeout(function(){ ctrl.abort(); }, 1500);
+    fetch(DAEMON, { signal: ctrl.signal, cache: 'no-store' })
+      .then(function(r){ clearTimeout(to); if (!r.ok) throw new Error('bad'); return r.json(); })
+      .then(renderLive)
+      .catch(function() { clearTimeout(to); loadSnapshot(); });
   })();
 </script>
 
