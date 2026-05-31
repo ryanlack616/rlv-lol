@@ -33,7 +33,13 @@ The site says "Where proof meets practice" but ships no proof. The brand is `Gro
 - [x] Add **contact** — sales / commissions / press lines.
 - [x] Inline principles as quiet commentary next to relevant blocks.
 
-### Brain (`brain/main.html`)
+### Brain (`brain/main.html`) — DECOMMISSIONED 2026-05-30
+
+> The public brain dashboard was removed: `brain/` and `dev/rlv/` deleted from the repo,
+> and the `howell-brain` Fly app (which backed `brain.rlv.lol`) was permanently destroyed.
+> It exposed internal project inventory/paths unauthenticated. Source remains in git history.
+> The live brain (memory/KG/daemon) runs locally only. The section below is historical.
+
 - [x] Hero: **patent countdown** front and center.
 - [x] **LLC / IP status panel** — LLC filed, EIN pending, DBA pending, provisional + conversion deadline.
 - [x] **Project health row** — live URL probes for Stull Atlas, Ceramic Engine, Crystal VR, groundequals, howell.help.
@@ -68,8 +74,8 @@ rlv-lol/
 
 ## Deploy
 
-- Landing (`rlv.lol`): commit to git → GitHub Pages auto-deploys.
-- Brain (`brain.rlv.lol`): `cd brain; fly deploy` from this directory.
+- Landing: commit to git → GitHub Pages auto-deploys at `ryanlack616.github.io/rlv-lol/`.
+- Brain dashboard: served from this repo at `/brain/` on GitHub Pages (gated). Do NOT `fly deploy` — `brain.rlv.lol` is Claude-Howell's brain (`howell-brain.fly.dev`), a different system; deploying would clobber it.
 
 ## Governance
 
