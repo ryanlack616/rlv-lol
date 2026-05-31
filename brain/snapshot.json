@@ -1,10 +1,10 @@
 {
-  "schema": 1,
-  "generated_at": "2026-05-30T20:19:39.117091+00:00",
-  "source_timestamp": "2026-05-30T16:19:39.111515",
+  "schema": 2,
+  "generated_at": "2026-05-31T02:00:33.854589+00:00",
+  "source_timestamp": "2026-05-30T22:00:33.787871",
   "daemon": {
     "status": "ok",
-    "uptime": "31h 15m 57s",
+    "uptime": "36h 56m 52s",
     "threads_healthy": true,
     "threads_alive": 10,
     "threads_total": 10
@@ -14,9 +14,9 @@
     "archivist": true,
     "explorer": true,
     "vision": true,
-    "cortex_requests": 101,
+    "cortex_requests": 104,
     "hypotheses_verified": 75,
-    "dreams": 12,
+    "dreams": 14,
     "consolidations": 8
   },
   "knowledge_graph": {
@@ -27,17 +27,90 @@
     "last_sync": "2026-05-29T01:02:07.464371"
   },
   "memory": {
-    "sessions": 801,
-    "notes": 857,
+    "sessions": 802,
+    "notes": 858,
     "note_coverage_pct": 99.8
   },
   "tasks": {
-    "pending": 4,
-    "completed": 90,
+    "pending": 3,
+    "completed": 91,
     "failed": 0
   },
   "routing": {
     "local_pct": 100.0,
     "offline_ready": false
+  },
+  "scorecard": {
+    "overall": 83.6,
+    "status": "strong",
+    "summary": "Persistent cognition is now measurable instead of implicit.",
+    "metrics": {
+      "continuity": {
+        "score": 43.6,
+        "status": "fragile"
+      },
+      "local_readiness": {
+        "score": 100.0,
+        "status": "strong"
+      },
+      "evidence": {
+        "score": 90.9,
+        "status": "strong"
+      },
+      "resilience": {
+        "score": 100.0,
+        "status": "strong"
+      }
+    },
+    "next_actions": [
+      "Improve end-session notes and reduce unclaimed handoffs"
+    ]
+  },
+  "attention": {
+    "status": "watch",
+    "summary": "3 open tasks, 12 unclaimed handoffs, 46 inbox items",
+    "open_loops": {
+      "tasks": 3,
+      "handoffs": 12,
+      "inbox": 46,
+      "blockers": 4
+    },
+    "focus": [
+      {
+        "type": "task",
+        "label": "Rotate CF API token CF_TOKEN_REDACTED (exposed)",
+        "detail": "pending \u00b7 high \u00b7 howell-help"
+      },
+      {
+        "type": "task",
+        "label": "Add laptop as Syncthing peer (fix single-device backup gap)",
+        "detail": "pending \u00b7 low \u00b7 howell"
+      },
+      {
+        "type": "task",
+        "label": "Revisit synesthesia: workspace_pulse is the missing consumer",
+        "detail": "pending \u00b7 low \u00b7 howell-cortex"
+      },
+      {
+        "type": "handoff",
+        "label": "minarealm.shop audit done (autonomous, while Ryan away). Report: dev/minarealm/LAUNCH_AUDIT_2026-05-",
+        "detail": "from CH-260529-2 \u00b7 high"
+      },
+      {
+        "type": "handoff",
+        "label": "Session close: DG6 and CG1-CG5 are closed and validated. Added cortex consumer parity for policy fre",
+        "detail": "from CH-260528-5 \u00b7 normal"
+      },
+      {
+        "type": "blocker",
+        "label": "[AUTO-SUMMARY] Full consolidation pass (CH-260517-2). SOUL.md bumped to v41 with May 12-17 events: c",
+        "detail": "agent CH-260517-1"
+      }
+    ]
+  },
+  "quarantine": {
+    "pending": 22,
+    "slo_status": "ok",
+    "slo_ok": true
   }
 }

@@ -208,6 +208,133 @@
     letter-spacing: 0.03em;
     line-height: 1.5;
   }
+  .cog-v.warn { color: var(--amber); }
+  .cog-v.bad  { color: var(--red); }
+
+  /* ── Attention panel ── */
+  .attention-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    gap: 1rem;
+  }
+  .attention-summary {
+    font-size: 11px;
+    color: var(--text-mid);
+    letter-spacing: 0.02em;
+  }
+  .attn-badge {
+    font-size: 8.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.1rem 0.45rem;
+    white-space: nowrap;
+    color: var(--text-dim);
+  }
+  .attn-badge.ok    { color: var(--green); border-color: var(--green); }
+  .attn-badge.watch { color: var(--amber); border-color: var(--amber); }
+  .attn-badge.alert { color: var(--red);   border-color: var(--red); }
+  .focus-list {
+    border: 1px solid var(--border);
+  }
+  .focus-row {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 12px;
+  }
+  .focus-row:last-child { border-bottom: none; }
+  .focus-type {
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 0.1rem 0.35rem;
+    color: var(--text-dim);
+    margin-top: 1px;
+    display: inline-block;
+  }
+  .focus-type.task    { color: var(--accent); border-color: var(--accent-warm); }
+  .focus-type.handoff { color: var(--amber); border-color: var(--amber); }
+  .focus-type.blocker { color: var(--red); border-color: var(--red); }
+  .focus-label { color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 680px; }
+  .focus-detail { font-size: 10px; color: var(--text-dim); margin-top: 0.15rem; letter-spacing: 0.03em; }
+  .attention-note {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+  }
+
+  /* ── Howell internals panel ── */
+  .internals-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .internals-cell {
+    background: var(--surface);
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .internals-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.25rem;
+  }
+  .internals-name {
+    font-size: 12px;
+    color: var(--text);
+    letter-spacing: 0.03em;
+  }
+  .internals-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    flex-shrink: 0;
+  }
+  .internals-dot.green { background: var(--green); }
+  .internals-dot.red   { background: var(--red); }
+  .internals-desc { font-size: 11px; color: var(--text-mid); line-height: 1.55; }
+  .internals-url  { font-size: 10px; color: var(--text-dim); letter-spacing: 0.02em; margin-top: 0.25rem; }
+  .internals-open {
+    display: inline-block;
+    font-size: 8.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent-warm);
+    padding: 0.1rem 0.4rem;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+  }
+  .internals-open:hover { color: var(--bg); background: var(--accent); text-decoration: none; }
+  .internals-note {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 720px) {
+    .internals-grid { grid-template-columns: 1fr; }
+  }
 
   /* ── Master plan ── */
   .plan {
@@ -525,8 +652,66 @@
     <div class="cog-v" data-cog="threadcount">—</div>
     <div class="cog-sub" data-cog="threadhealth">—</div>
   </div>
+  <div class="cog-cell">
+    <div class="cog-k">System score</div>
+    <div class="cog-v" data-cog="scoreVal">—</div>
+    <div class="cog-sub" data-cog="scoreStatus">—</div>
+  </div>
+  <div class="cog-cell">
+    <div class="cog-k">Open loops</div>
+    <div class="cog-v" data-cog="openLoops">—</div>
+    <div class="cog-sub" data-cog="openLoopsSub">—</div>
+  </div>
+  <div class="cog-cell">
+    <div class="cog-k">Quarantine</div>
+    <div class="cog-v" data-cog="qPending">—</div>
+    <div class="cog-sub" data-cog="qStatus">—</div>
+  </div>
+  <div class="cog-cell">
+    <div class="cog-k">KG quality</div>
+    <div class="cog-v" data-cog="kgQuality">—</div>
+    <div class="cog-sub">structured observations</div>
+  </div>
 </div>
 <div class="cog-note" id="cogNote">—</div>
+
+<!-- ── Attention (Howell focus) ── -->
+<div class="section-label">Attention</div>
+<div class="attention-head">
+  <p class="attention-summary" id="attnSummary">—</p>
+  <span class="attn-badge" id="attnBadge">loading</span>
+</div>
+<div class="focus-list" id="focusList">
+  <div class="focus-row" style="background:var(--surface)">
+    <span class="focus-type">—</span>
+    <div><div class="focus-label" style="color:var(--text-dim)">loading…</div></div>
+  </div>
+</div>
+<div class="attention-note" id="attnNote">Live when viewed on the host machine.</div>
+
+<!-- ── Howell internals (local-only links) ── -->
+<div class="section-label">Howell internals</div>
+<div class="internals-grid">
+  <div class="internals-cell">
+    <div class="internals-head">
+      <span class="internals-name">System Health Panel</span>
+      <span class="internals-dot" id="intDotHealth"></span>
+    </div>
+    <div class="internals-desc">Full health dashboard — background threads, systemd timers, disk, speed layer telemetry, restore drill, API key age, inotify limits.</div>
+    <div class="internals-url">127.0.0.1:7777 / health.html</div>
+    <a class="internals-open" href="http://127.0.0.1:7777/health.html" target="_blank" rel="noopener" id="intLinkHealth">→ open</a>
+  </div>
+  <div class="internals-cell">
+    <div class="internals-head">
+      <span class="internals-name">Cortex Control Plane</span>
+      <span class="internals-dot" id="intDotCortex"></span>
+    </div>
+    <div class="internals-desc">Cortex inference dashboard — model roster, quarantine queue, digest timing, prediction errors, KG criticality, dream pipeline state.</div>
+    <div class="internals-url">127.0.0.1:7777 /</div>
+    <a class="internals-open" href="http://127.0.0.1:7777/" target="_blank" rel="noopener" id="intLinkCortex">→ open</a>
+  </div>
+</div>
+<div class="internals-note">These links resolve only when viewed on the host machine. Clicking them from anywhere else will time out.</div>
 
 <!-- ── Master plan ── -->
 <div class="section-label">Master plan</div>
@@ -857,15 +1042,80 @@
       return Math.round(hrs / 24) + 'd ago';
     }
 
+    // Score status → css class
+    function scoreClass(status) {
+      if (!status) return '';
+      if (status === 'strong') return 'green';
+      if (status === 'fragile' || status === 'degraded') return 'warn';
+      return 'bad';
+    }
+
+    // Render the attention panel from an attention object
+    function renderAttention(attn) {
+      if (!attn) return;
+      var badge = document.getElementById('attnBadge');
+      var summary = document.getElementById('attnSummary');
+      var note = document.getElementById('attnNote');
+      var list = document.getElementById('focusList');
+
+      var st = attn.status || 'ok';
+      badge.className = 'attn-badge ' + st;
+      badge.textContent = st;
+      summary.textContent = attn.summary || '—';
+
+      var focus = attn.focus || [];
+      if (focus.length === 0) {
+        list.innerHTML = '<div class="focus-row"><span class="focus-type">—</span><div><div class="focus-label" style="color:var(--text-dim)">No open focus items.</div></div></div>';
+        return;
+      }
+      list.innerHTML = focus.slice(0, 6).map(function(f) {
+        var type = f.type || 'item';
+        var label = (f.label || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        var detail = (f.detail || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return '<div class="focus-row">' +
+          '<span class="focus-type ' + type + '">' + type + '</span>' +
+          '<div><div class="focus-label">' + label + '</div>' +
+          (detail ? '<div class="focus-detail">' + detail + '</div>' : '') +
+          '</div></div>';
+      }).join('');
+      note.textContent = 'Live attention state. Showing top ' + Math.min(focus.length, 6) + ' of ' + (attn.open_loops ? (attn.open_loops.tasks || 0) + (attn.open_loops.handoffs || 0) + (attn.open_loops.inbox || 0) : focus.length) + ' open items.';
+    }
+
+    // Ping the internals endpoints with no-cors; update dots
+    function pingInternals() {
+      [
+        { url: 'http://127.0.0.1:7777/health.html', dotId: 'intDotHealth' },
+        { url: 'http://127.0.0.1:7777/', dotId: 'intDotCortex' },
+      ].forEach(function(item) {
+        var ctrl = new AbortController();
+        var to = setTimeout(function() { ctrl.abort(); }, 2500);
+        fetch(item.url, { mode: 'no-cors', signal: ctrl.signal, cache: 'no-store' })
+          .then(function() {
+            clearTimeout(to);
+            var dot = document.getElementById(item.dotId);
+            if (dot) dot.className = 'internals-dot green';
+          })
+          .catch(function() {
+            clearTimeout(to);
+            var dot = document.getElementById(item.dotId);
+            if (dot) dot.className = 'internals-dot red';
+          });
+      });
+    }
+
     // Render from a LIVE /health/full payload.
     function renderLive(d) {
       var dm = d.daemon || {}, c = d.cortex || {}, kg = d.knowledge_graph || {},
           ag = d.agents || {}, tk = d.tasks || {}, by = c.by_task || {},
-          su = ((d.speed_layer || {}).usage || {}).window_5m || {};
+          su = ((d.speed_layer || {}).usage || {}).window_5m || {},
+          sc = d.scorecard || {}, scm = sc.metrics || {},
+          attn = d.attention || {}, ol = attn.open_loops || {},
+          q = d.quarantine || {};
       var threads = dm.threads || {};
       var alive = Object.values(threads).filter(function(t){ return t && t.alive; }).length;
       var total = Object.keys(threads).length;
       var dreams = (by.dream || 0) + (by.dream_filter || 0);
+
       txt('uptime', dm.uptime || '—');
       txt('threads', dm.threads_healthy ? 'all systems nominal' : 'thread fault');
       txt('entities', kg.entities != null ? String(kg.entities) : '—');
@@ -880,16 +1130,56 @@
       txt('taskssub', (tk.pending || 0) + ' pending · ' + (tk.failed || 0) + ' failed');
       txt('threadcount', total ? (alive + '/' + total) : '—');
       txt('threadhealth', dm.threads_healthy ? 'all alive' : 'fault detected');
+
+      // New cells
+      var scoreEl = document.querySelector('[data-cog="scoreVal"]');
+      if (scoreEl) {
+        var scoreVal = sc.overall != null ? String(sc.overall) : '—';
+        scoreEl.textContent = scoreVal;
+        scoreEl.className = 'cog-v ' + scoreClass(sc.status);
+      }
+      txt('scoreStatus', sc.status ? (sc.status + (sc.summary ? ' · ' + sc.summary.slice(0, 40) + (sc.summary.length > 40 ? '…' : '') : '')) : '—');
+
+      var openTotal = (ol.tasks || 0) + (ol.handoffs || 0) + (ol.inbox || 0);
+      var olEl = document.querySelector('[data-cog="openLoops"]');
+      if (olEl) {
+        olEl.textContent = openTotal > 0 ? String(openTotal) : '0';
+        olEl.className = 'cog-v ' + (attn.status === 'alert' ? 'bad' : attn.status === 'watch' ? 'warn' : '');
+      }
+      txt('openLoopsSub', (ol.tasks || 0) + ' tasks · ' + (ol.handoffs || 0) + ' handoffs · ' + (ol.inbox || 0) + ' inbox');
+
+      var qEl = document.querySelector('[data-cog="qPending"]');
+      if (qEl) {
+        var qPend = q.pending_entries != null ? q.pending_entries : '—';
+        qEl.textContent = String(qPend);
+        var qSlo = (q.slo || {}).status || '';
+        qEl.className = 'cog-v ' + (qSlo === 'ok' ? '' : qSlo === 'warn' ? 'warn' : 'bad');
+      }
+      txt('qStatus', 'pending · SLO ' + ((q.slo || {}).status || '—'));
+
+      var kgQ = kg.structured_pct != null ? kg.structured_pct + '%' : '—';
+      var kgEl = document.querySelector('[data-cog="kgQuality"]');
+      if (kgEl) {
+        kgEl.textContent = kgQ;
+        kgEl.className = 'cog-v ' + (kg.structured_pct >= 80 ? 'green' : kg.structured_pct >= 60 ? 'warn' : 'bad');
+      }
+
       badge('live', 'live · local');
       document.getElementById('cogNote').textContent =
         'Reading the local daemon directly. ' + (c.total_requests || 0) +
         ' cortex calls · ' + (kg.structured_pct || 0) + '% structured memory.';
+
+      renderAttention(attn);
+      pingInternals();
     }
 
     // Render from the published snapshot.json (sanitized, aggregate).
     function renderSnap(s) {
       var dm = s.daemon || {}, cg = s.cognition || {}, kg = s.knowledge_graph || {},
-          mem = s.memory || {}, tk = s.tasks || {}, rt = s.routing || {};
+          mem = s.memory || {}, tk = s.tasks || {}, rt = s.routing || {},
+          sc = s.scorecard || {}, scm = sc.metrics || {},
+          attn = s.attention || {}, ol = (attn.open_loops) || {},
+          q = s.quarantine || {};
       txt('uptime', dm.uptime || '—');
       txt('threads', dm.threads_healthy ? 'all systems nominal' : 'thread fault');
       txt('entities', kg.entities != null ? String(kg.entities) : '—');
@@ -905,10 +1195,51 @@
       txt('threadcount', (dm.threads_alive != null && dm.threads_total != null)
         ? (dm.threads_alive + '/' + dm.threads_total) : '—');
       txt('threadhealth', dm.threads_healthy ? 'all alive' : 'fault detected');
+
+      // New cells — populated if snapshot includes them, else graceful fallback
+      var scoreEl = document.querySelector('[data-cog="scoreVal"]');
+      if (scoreEl) {
+        scoreEl.textContent = sc.overall != null ? String(sc.overall) : '—';
+        scoreEl.className = 'cog-v ' + scoreClass(sc.status);
+      }
+      txt('scoreStatus', sc.status || '—');
+      var openTotal = (ol.tasks || 0) + (ol.handoffs || 0) + (ol.inbox || 0);
+      var olEl = document.querySelector('[data-cog="openLoops"]');
+      if (olEl) {
+        olEl.textContent = openTotal > 0 ? String(openTotal) : '—';
+        olEl.className = 'cog-v';
+      }
+      txt('openLoopsSub', openTotal > 0
+        ? (ol.tasks || 0) + ' tasks · ' + (ol.handoffs || 0) + ' handoffs · ' + (ol.inbox || 0) + ' inbox'
+        : attn.summary || '—');
+      var qEl = document.querySelector('[data-cog="qPending"]');
+      if (qEl) {
+        qEl.textContent = q.pending != null ? String(q.pending) : '—';
+        qEl.className = 'cog-v';
+      }
+      txt('qStatus', 'pending · SLO ' + (q.slo_status || '—'));
+      var kgEl = document.querySelector('[data-cog="kgQuality"]');
+      if (kgEl) {
+        kgEl.textContent = kg.structured_pct != null ? kg.structured_pct + '%' : '—';
+        kgEl.className = 'cog-v ' + (kg.structured_pct >= 80 ? 'green' : kg.structured_pct >= 60 ? 'warn' : '');
+      }
+
       badge('snap', 'snapshot · ' + ago(s.source_timestamp || s.generated_at));
       document.getElementById('cogNote').textContent =
         'Last published snapshot. Live figures appear when viewing on the host machine. ' +
         (cg.cortex_requests || 0) + ' cortex calls · ' + (kg.structured_pct || 0) + '% structured memory.';
+
+      // Render attention from snapshot if available
+      if (attn && attn.summary) {
+        renderAttention(attn);
+        document.getElementById('attnNote').textContent = 'From the last published snapshot · ' + ago(s.source_timestamp || s.generated_at);
+      } else {
+        document.getElementById('attnBadge').textContent = 'snapshot';
+        document.getElementById('attnSummary').textContent = 'Attention state not included in this snapshot.';
+        document.getElementById('focusList').innerHTML = '<div class="focus-row"><span class="focus-type">—</span><div><div class="focus-label" style="color:var(--text-dim)">Open live on the host machine to see focus items.</div></div></div>';
+      }
+      // Always try to ping internals (in case viewer is on host via browser)
+      pingInternals();
     }
 
     function loadSnapshot() {
@@ -927,7 +1258,16 @@
     var to = setTimeout(function(){ ctrl.abort(); }, 1500);
     fetch(DAEMON, { signal: ctrl.signal, cache: 'no-store' })
       .then(function(r){ clearTimeout(to); if (!r.ok) throw new Error('bad'); return r.json(); })
-      .then(renderLive)
+      .then(function(d) {
+        renderLive(d);
+        // Auto-refresh every 30s when live daemon is reachable
+        setInterval(function() {
+          fetch(DAEMON, { cache: 'no-store' })
+            .then(function(r){ return r.ok ? r.json() : null; })
+            .then(function(d){ if (d) renderLive(d); })
+            .catch(function(){});
+        }, 30000);
+      })
       .catch(function() { clearTimeout(to); loadSnapshot(); });
   })();
 </script>

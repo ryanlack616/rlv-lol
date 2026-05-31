@@ -66,12 +66,27 @@ def build_snapshot(health: dict) -> dict:
     offline = health.get("offline_readiness", {}) or {}
     speed = health.get("speed_layer", {}) or {}
     usage = (speed.get("usage", {}) or {}).get("window_5m", {}) or {}
+    sc = health.get("scorecard", {}) or {}
+    sc_metrics = sc.get("metrics", {}) or {}
+    attn = health.get("attention", {}) or {}
+    attn_ol = attn.get("open_loops", {}) or {}
+    q = health.get("quarantine", {}) or {}
+    q_slo = q.get("slo", {}) or {}
 
     by_task = cortex.get("by_task", {}) or {}
     dreams = _num(by_task.get("dream")) + _num(by_task.get("dream_filter"))
 
+    # Sanitize focus items: strip any paths or internal detail, keep type/label/detail
+    def _safe_focus(items):
+        safe = []
+        for f in (items or [])[:6]:
+            label = str(f.get("label") or "")[:120]
+            detail = str(f.get("detail") or "")[:80]
+            safe.append({"type": f.get("type", "item"), "label": label, "detail": detail})
+        return safe
+
     snap = {
-        "schema": 1,
+        "schema": 2,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_timestamp": health.get("timestamp"),
         "daemon": {
@@ -112,6 +127,35 @@ def build_snapshot(health: dict) -> dict:
             # local_pct over the most recent telemetry window — proof of local-first
             "local_pct": _num(usage.get("local_pct")),
             "offline_ready": bool(offline.get("offline_ready")),
+        },
+        # Scorecard — system-level health in one number; no paths or internal detail
+        "scorecard": {
+            "overall": sc.get("overall"),
+            "status": sc.get("status"),
+            "summary": sc.get("summary"),
+            "metrics": {
+                k: {"score": _num(v.get("score")), "status": v.get("status")}
+                for k, v in sc_metrics.items()
+            },
+            "next_actions": sc.get("next_actions", [])[:3],
+        },
+        # Attention — open loops and focus items (labels only, no paths/keys)
+        "attention": {
+            "status": attn.get("status"),
+            "summary": attn.get("summary"),
+            "open_loops": {
+                "tasks": _num(attn_ol.get("tasks")),
+                "handoffs": _num(attn_ol.get("handoffs")),
+                "inbox": _num(attn_ol.get("inbox")),
+                "blockers": _num(attn_ol.get("blockers")),
+            },
+            "focus": _safe_focus(attn.get("focus", [])),
+        },
+        # Quarantine — pending count + SLO health (no contents, just aggregate)
+        "quarantine": {
+            "pending": _num(q.get("pending_entries")),
+            "slo_status": q_slo.get("status"),
+            "slo_ok": bool(q_slo.get("pending_ok")) and bool(q_slo.get("delta_24h_ok")),
         },
     }
     return snap
