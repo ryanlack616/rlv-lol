@@ -1,41 +1,52 @@
 {
-  "generated": "2026-05-30T16:53:13-04:00",
-  "source_ts": "2026-05-30T15:38:38-04:00",
-  "total_lines": 2819826,
-  "file_count": 25829,
-  "project_count": 94,
+  "generated": "2026-06-01T00:27:45-04:00",
+  "source_ts": "2026-06-01T00:27:45-04:00",
+  "total_lines": 2915343,
+  "file_count": 26317,
+  "project_count": 86,
   "by_category": {
-    "code": 717993,
-    "markup": 1085138,
-    "data": 792481,
-    "docs": 224214
+    "code": 737228,
+    "markup": 1158081,
+    "data": 783167,
+    "docs": 236867
   },
   "code_breakdown": {
-    "code": 577765,
-    "comment": 52152,
-    "blank": 88110
+    "code": 593531,
+    "comment": 52977,
+    "blank": 90754
   },
   "by_ext": {
-    ".html": 1039334,
-    ".json": 766322,
-    ".py": 338918,
-    ".md": 164923,
-    ".js": 151545,
+    ".html": 1070815,
+    ".json": 756934,
+    ".py": 356627,
+    ".md": 176770,
+    ".js": 152751,
     ".ts": 106021,
     ".tsx": 99373,
-    ".txt": 59291,
-    ".svg": 29222,
-    ".csv": 21107,
-    ".css": 16582,
+    ".txt": 60097,
+    ".svg": 51929,
+    ".css": 35337,
+    ".csv": 21116,
     ".h": 10144,
-    ".sh": 5769,
+    ".sh": 6089,
     ".rs": 4829,
-    ".yml": 3213,
+    ".yml": 3243,
     ".cpp": 1394,
     ".jsonl": 981,
-    ".toml": 858
+    ".toml": 893
   },
   "projects": [
+    {
+      "name": "z-put-down",
+      "total": 419713,
+      "code": 45231,
+      "markup": 325185,
+      "data": 27691,
+      "docs": 21606,
+      "logic": 35342,
+      "comment_lines": 3842,
+      "blank_lines": 6050
+    },
     {
       "name": "stull-atlas",
       "total": 380251,
@@ -46,17 +57,6 @@
       "logic": 103652,
       "comment_lines": 11269,
       "blank_lines": 13983
-    },
-    {
-      "name": "ceramics-community",
-      "total": 350352,
-      "code": 27623,
-      "markup": 297769,
-      "data": 8081,
-      "docs": 16879,
-      "logic": 21007,
-      "comment_lines": 2537,
-      "blank_lines": 4079
     },
     {
       "name": "glaze-chemist",
@@ -104,14 +104,14 @@
     },
     {
       "name": "cmw",
-      "total": 141463,
-      "code": 39473,
+      "total": 141361,
+      "code": 39464,
       "markup": 14787,
       "data": 59677,
-      "docs": 27526,
-      "logic": 31579,
-      "comment_lines": 2536,
-      "blank_lines": 5358
+      "docs": 27433,
+      "logic": 31573,
+      "comment_lines": 2535,
+      "blank_lines": 5356
     },
     {
       "name": "glaze-db-sources",
@@ -126,14 +126,25 @@
     },
     {
       "name": "digicomp",
-      "total": 61661,
-      "code": 9764,
-      "markup": 8971,
-      "data": 37125,
-      "docs": 5801,
-      "logic": 8369,
-      "comment_lines": 8,
-      "blank_lines": 1387
+      "total": 68566,
+      "code": 12945,
+      "markup": 9076,
+      "data": 40360,
+      "docs": 6185,
+      "logic": 11072,
+      "comment_lines": 44,
+      "blank_lines": 1829
+    },
+    {
+      "name": "howell",
+      "total": 58295,
+      "code": 23906,
+      "markup": 17536,
+      "data": 8252,
+      "docs": 8601,
+      "logic": 18872,
+      "comment_lines": 2205,
+      "blank_lines": 2830
     },
     {
       "name": "glazy",
@@ -145,6 +156,17 @@
       "logic": 19944,
       "comment_lines": 2529,
       "blank_lines": 2656
+    },
+    {
+      "name": "minarealm",
+      "total": 50336,
+      "code": 3388,
+      "markup": 41335,
+      "data": 2227,
+      "docs": 3386,
+      "logic": 3010,
+      "comment_lines": 118,
+      "blank_lines": 260
     },
     {
       "name": "monospacepoetry",
@@ -159,25 +181,25 @@
     },
     {
       "name": "howell-brain-deploy",
-      "total": 47150,
+      "total": 47241,
       "code": 33269,
       "markup": 7976,
       "data": 1946,
-      "docs": 3959,
+      "docs": 4050,
       "logic": 27465,
       "comment_lines": 1581,
       "blank_lines": 4223
     },
     {
       "name": "howell-cortex",
-      "total": 37018,
-      "code": 19809,
+      "total": 40240,
+      "code": 22659,
       "markup": 0,
       "data": 9241,
-      "docs": 7968,
-      "logic": 15913,
-      "comment_lines": 1076,
-      "blank_lines": 2820
+      "docs": 8340,
+      "logic": 18244,
+      "comment_lines": 1226,
+      "blank_lines": 3189
     },
     {
       "name": "stull-visual-language",
@@ -189,17 +211,6 @@
       "logic": 5920,
       "comment_lines": 567,
       "blank_lines": 901
-    },
-    {
-      "name": ".",
-      "total": 32175,
-      "code": 12077,
-      "markup": 8984,
-      "data": 5605,
-      "docs": 5509,
-      "logic": 10178,
-      "comment_lines": 472,
-      "blank_lines": 1427
     },
     {
       "name": "garbagepalkids",
@@ -224,6 +235,17 @@
       "blank_lines": 2191
     },
     {
+      "name": "(dev root)",
+      "total": 30309,
+      "code": 10800,
+      "markup": 8578,
+      "data": 5559,
+      "docs": 5372,
+      "logic": 9127,
+      "comment_lines": 417,
+      "blank_lines": 1256
+    },
+    {
       "name": "high-temp-ceramics",
       "total": 29078,
       "code": 9129,
@@ -246,28 +268,6 @@
       "blank_lines": 1923
     },
     {
-      "name": "minarealm",
-      "total": 28546,
-      "code": 2611,
-      "markup": 20322,
-      "data": 2227,
-      "docs": 3386,
-      "logic": 2287,
-      "comment_lines": 107,
-      "blank_lines": 217
-    },
-    {
-      "name": "howell",
-      "total": 27779,
-      "code": 15590,
-      "markup": 856,
-      "data": 6192,
-      "docs": 5141,
-      "logic": 12143,
-      "comment_lines": 1716,
-      "blank_lines": 1732
-    },
-    {
       "name": "groundequals",
       "total": 26358,
       "code": 11194,
@@ -277,17 +277,6 @@
       "logic": 8959,
       "comment_lines": 514,
       "blank_lines": 1721
-    },
-    {
-      "name": "overlapp-gallery",
-      "total": 25459,
-      "code": 11404,
-      "markup": 303,
-      "data": 13042,
-      "docs": 710,
-      "logic": 9220,
-      "comment_lines": 1093,
-      "blank_lines": 1091
     },
     {
       "name": "ken-shenstone-legacy",
@@ -334,17 +323,6 @@
       "blank_lines": 535
     },
     {
-      "name": "reports",
-      "total": 21031,
-      "code": 0,
-      "markup": 0,
-      "data": 20603,
-      "docs": 428,
-      "logic": 0,
-      "comment_lines": 0,
-      "blank_lines": 0
-    },
-    {
       "name": "ceramic-engine",
       "total": 20378,
       "code": 13154,
@@ -354,6 +332,17 @@
       "logic": 10474,
       "comment_lines": 622,
       "blank_lines": 2058
+    },
+    {
+      "name": "ruinsrebuilt",
+      "total": 18859,
+      "code": 483,
+      "markup": 17629,
+      "data": 719,
+      "docs": 28,
+      "logic": 404,
+      "comment_lines": 5,
+      "blank_lines": 74
     },
     {
       "name": "howell-studio",
@@ -444,6 +433,17 @@
       "blank_lines": 1710
     },
     {
+      "name": "profiles-people",
+      "total": 11726,
+      "code": 352,
+      "markup": 0,
+      "data": 2717,
+      "docs": 8657,
+      "logic": 266,
+      "comment_lines": 15,
+      "blank_lines": 71
+    },
+    {
       "name": "atomiclithosphere",
       "total": 10193,
       "code": 2617,
@@ -455,6 +455,17 @@
       "blank_lines": 303
     },
     {
+      "name": "2minpapers",
+      "total": 10171,
+      "code": 2785,
+      "markup": 2136,
+      "data": 5129,
+      "docs": 121,
+      "logic": 2354,
+      "comment_lines": 75,
+      "blank_lines": 356
+    },
+    {
       "name": "ceramic-micros",
       "total": 9120,
       "code": 298,
@@ -464,17 +475,6 @@
       "logic": 247,
       "comment_lines": 17,
       "blank_lines": 34
-    },
-    {
-      "name": "2minpapers",
-      "total": 8384,
-      "code": 1690,
-      "markup": 2136,
-      "data": 4437,
-      "docs": 121,
-      "logic": 1516,
-      "comment_lines": 1,
-      "blank_lines": 173
     },
     {
       "name": "research",
@@ -554,17 +554,6 @@
       "blank_lines": 928
     },
     {
-      "name": "throwvr",
-      "total": 6073,
-      "code": 2366,
-      "markup": 151,
-      "data": 2764,
-      "docs": 792,
-      "logic": 2025,
-      "comment_lines": 15,
-      "blank_lines": 328
-    },
-    {
       "name": "atomus-space",
       "total": 5776,
       "code": 364,
@@ -631,15 +620,15 @@
       "blank_lines": 79
     },
     {
-      "name": "parcelspace",
-      "total": 3668,
-      "code": 344,
-      "markup": 1804,
-      "data": 1461,
-      "docs": 59,
-      "logic": 296,
-      "comment_lines": 28,
-      "blank_lines": 20
+      "name": "rlv-lol",
+      "total": 3451,
+      "code": 443,
+      "markup": 1425,
+      "data": 1182,
+      "docs": 401,
+      "logic": 377,
+      "comment_lines": 2,
+      "blank_lines": 64
     },
     {
       "name": "pipecamp",
@@ -653,17 +642,6 @@
       "blank_lines": 0
     },
     {
-      "name": "northbridgegroup",
-      "total": 3140,
-      "code": 1209,
-      "markup": 1892,
-      "data": 28,
-      "docs": 11,
-      "logic": 1002,
-      "comment_lines": 51,
-      "blank_lines": 156
-    },
-    {
       "name": "ledger-bridge-site",
       "total": 2956,
       "code": 1203,
@@ -673,17 +651,6 @@
       "logic": 1007,
       "comment_lines": 55,
       "blank_lines": 141
-    },
-    {
-      "name": "pogram-lint",
-      "total": 2839,
-      "code": 142,
-      "markup": 1519,
-      "data": 443,
-      "docs": 735,
-      "logic": 112,
-      "comment_lines": 3,
-      "blank_lines": 27
     },
     {
       "name": "minarealm-shop",
@@ -697,37 +664,15 @@
       "blank_lines": 137
     },
     {
-      "name": "throw",
-      "total": 2569,
-      "code": 1048,
+      "name": "tests",
+      "total": 2330,
+      "code": 2330,
       "markup": 0,
       "data": 0,
-      "docs": 1521,
-      "logic": 799,
-      "comment_lines": 52,
-      "blank_lines": 198
-    },
-    {
-      "name": "rootsatlas",
-      "total": 2555,
-      "code": 341,
-      "markup": 1999,
-      "data": 24,
-      "docs": 191,
-      "logic": 259,
-      "comment_lines": 45,
-      "blank_lines": 37
-    },
-    {
-      "name": "rlv-lol",
-      "total": 2322,
-      "code": 158,
-      "markup": 1788,
-      "data": 60,
-      "docs": 316,
-      "logic": 137,
-      "comment_lines": 0,
-      "blank_lines": 21
+      "docs": 0,
+      "logic": 1831,
+      "comment_lines": 79,
+      "blank_lines": 420
     },
     {
       "name": "vision-api",
@@ -741,15 +686,15 @@
       "blank_lines": 217
     },
     {
-      "name": "ttp-services",
-      "total": 1861,
-      "code": 0,
-      "markup": 1728,
-      "data": 0,
-      "docs": 133,
-      "logic": 0,
-      "comment_lines": 0,
-      "blank_lines": 0
+      "name": "(tools root)",
+      "total": 2036,
+      "code": 1407,
+      "markup": 406,
+      "data": 46,
+      "docs": 177,
+      "logic": 1162,
+      "comment_lines": 64,
+      "blank_lines": 181
     },
     {
       "name": "ceramic-stability-engine",
@@ -818,17 +763,6 @@
       "blank_lines": 125
     },
     {
-      "name": "tests",
-      "total": 1308,
-      "code": 1308,
-      "markup": 0,
-      "data": 0,
-      "docs": 0,
-      "logic": 1039,
-      "comment_lines": 49,
-      "blank_lines": 220
-    },
-    {
       "name": "howell-ryan-webxr",
       "total": 1223,
       "code": 51,
@@ -838,17 +772,6 @@
       "logic": 35,
       "comment_lines": 0,
       "blank_lines": 16
-    },
-    {
-      "name": "tryit-photo-system",
-      "total": 1121,
-      "code": 0,
-      "markup": 0,
-      "data": 795,
-      "docs": 326,
-      "logic": 0,
-      "comment_lines": 0,
-      "blank_lines": 0
     },
     {
       "name": "howell-vscode-lm",
@@ -906,26 +829,15 @@
       "blank_lines": 0
     },
     {
-      "name": "selfexecuting-v2",
-      "total": 612,
-      "code": 0,
-      "markup": 391,
-      "data": 0,
-      "docs": 221,
-      "logic": 0,
+      "name": "web-copy-paste-new-tool",
+      "total": 574,
+      "code": 270,
+      "markup": 250,
+      "data": 25,
+      "docs": 29,
+      "logic": 231,
       "comment_lines": 0,
-      "blank_lines": 0
-    },
-    {
-      "name": "show-old-throw",
-      "total": 605,
-      "code": 271,
-      "markup": 0,
-      "data": 334,
-      "docs": 0,
-      "logic": 218,
-      "comment_lines": 13,
-      "blank_lines": 40
+      "blank_lines": 39
     },
     {
       "name": "homepost-vigil",
@@ -1109,8 +1021,8 @@
     },
     {
       "lines": 11907,
-      "project": "overlapp-gallery",
-      "path": "overlapp-gallery/package-lock.json"
+      "project": "z-put-down",
+      "path": "z-put-down/overlapp-gallery/package-lock.json"
     },
     {
       "lines": 11251,
