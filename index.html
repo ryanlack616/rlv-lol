@@ -421,77 +421,7 @@
   }
   .principle::before { content: "// "; color: var(--text-dim); }
 
-  /* ── Contact ── */
-  .contact {
-    padding-bottom: 2.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-  .contact-cell {
-    border: 1px solid var(--border);
-    padding: 1.25rem;
-    background: var(--surface);
-  }
-  .contact-k {
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 0.6rem;
-  }
-  .contact-v {
-    font-size: 12px;
-    color: var(--text);
-  }
-  .contact-sub {
-    font-size: 10px;
-    color: var(--text-dim);
-    margin-top: 0.3rem;
-    letter-spacing: 0.02em;
-  }
-
-  footer {
-    padding: 2.5rem 0 3rem;
-  }
-  footer .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .footer-left {
-    font-size: 11px;
-    color: var(--text-dim);
-    letter-spacing: 0.05em;
-  }
-  .footer-right {
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
-
-  @media (max-width: 720px) {
-    .op-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
-    .div-grid { grid-template-columns: 1fr; }
-    .patent-block { grid-template-columns: 1fr; gap: 1.5rem; }
-    .clock { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 1.5rem; text-align: left; }
-    .ev-row { grid-template-columns: 1fr; gap: 0.3rem; }
-    .ev-link { text-align: left; }
-    .opening-row { grid-template-columns: 24px 1fr; }
-    .op-state { grid-column: 2; justify-self: start; margin-top: 0.4rem; }
-    .contact-grid { grid-template-columns: 1fr; }
-    header .container { flex-direction: column; gap: 0.3rem; }
-    footer .container { flex-direction: column; gap: 0.5rem; }
-    .hero { padding: 3.5rem 0 3rem; }
-    .proj-row { grid-template-columns: 1fr; }
-    .proj-status, .proj-division { justify-self: start; }
-  }
+  
 </style>
 </head>
 <body>
@@ -771,28 +701,6 @@
   </div>
 </section>
 
-<section class="contact">
-  <div class="container">
-    <div class="section-label">Contact</div>
-    <div class="contact-grid">
-      <div class="contact-cell">
-        <div class="contact-k">General</div>
-        <div class="contact-v"><a href="mailto:rlackpotter@gmail.com">rlackpotter@gmail.com</a></div>
-        <div class="contact-sub">Ryan Lack · Howell, MI</div>
-      </div>
-      <div class="contact-cell">
-        <div class="contact-k">Ground= · Licensing</div>
-        <div class="contact-v"><a href="mailto:rlackpotter@gmail.com?subject=Ground%3D%20licensing%20inquiry">rlackpotter@gmail.com</a></div>
-        <div class="contact-sub">Patent, IP, computational ceramics</div>
-      </div>
-      <div class="contact-cell">
-        <div class="contact-k">My Clay Corner · Commissions</div>
-        <div class="contact-v"><a href="mailto:rlackpotter@gmail.com?subject=Commission%20inquiry">rlackpotter@gmail.com</a></div>
-        <div class="contact-sub">Pottery, stoneware, local markets</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="container">
